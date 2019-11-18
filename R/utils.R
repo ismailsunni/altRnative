@@ -14,3 +14,24 @@ supported_platforms <- function(){
     )
   )
 }
+
+
+#' Return supported R implementations
+#'
+#' Return list of supported R implementations with their key to access.
+#' @export
+#' @examples
+#' library("altRnative")
+#' supported_Rs()
+supported_Rs <- function(){
+  return(
+    list(
+      ("gnu-r" = "GNU R"),
+      ("mro" = "Microsoft R Open"),
+      ("renjin" = "Renjin"),
+      ("fastr" = "FastR"),
+      ("pqr" = "pqR"),
+      ("terr" = "TERR")
+    )
+  )
+}
