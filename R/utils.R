@@ -3,7 +3,7 @@
 #' Return list of supported platforms with their key to access.
 #' @export
 #' @examples
-#' library("altRnative)
+#' library("altRnative")
 #' supported_platforms()
 supported_platforms <- function(){
   return(
