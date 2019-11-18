@@ -9,3 +9,4 @@ Description: This package enables you to run your R code on different R implemen
 License: MIT
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1.9000
