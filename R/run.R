@@ -2,21 +2,45 @@
 #'
 #' Run a a code as a string in a docker image
 #' @import stevedore
-#' @param code An expression of R code
+#' @param code An expression or string of R code
 #' @param docker_image A docker image name
 #' @export
 #' @examples
 #' library("altRnative")
+#'
+#' # With string
+#' run("a = 1 + 1", "ismailsunni/gnur-3.6.1-debian-geospatial")
+#'
+#' # With expression
 #' run(expression(1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' run(expression(a = 1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
 #' run(expression(install.packages("ctv")), "ismailsunni/gnur-3.6.1-debian-geospatial")
-#' run(c(expression(install.packages("ctv")), expression(library("ctv")), expression(available_views())), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#'
+#' # With multiple string
+#' run(c("a = 1 + 1", "b = a + 2", "print(b)"), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' run(c("install.packages('ctv')", "library('ctv')", "available.views()"), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#'
+#' # With multiple expressions
+#' # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
+#' run(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' # This one is working
+#' run(c(expression(install.packages("ctv")), expression(library("ctv")), expression(available.views())), "ismailsunni/gnur-3.6.1-debian-geospatial")
 run <- function(code, docker_image){
-  print(code)
-  print(docker_image)
   # Prepare docker container
   docker <- stevedore::docker_client()
-  print(c("Rscript", "-e", paste0("eval(", code, ")")))
+
+  # Prepare the script
+  if (is.expression(code)){
+    code = as.character(code)
+  }
+  full_code <-paste(code, collapse = "; ")
+
+  # Debug purpose
+  print("Full command")
+  print(c("Rscript", "-e", full_code))
+
   # Run using stevedore
-  result <- docker$container$run(docker_image, c("Rscript", "-e", paste0("eval(", code, ")")), rm = TRUE)
-  result$logs
+  result <- docker$container$run(docker_image, c("Rscript", "-e", full_code), rm = TRUE)
+
+  return(result)
 }
