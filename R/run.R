@@ -1,6 +1,6 @@
 #' Run a code in a docker image
 #'
-#' Run a a code as a string in a docker image
+#' Run a code as a string in a docker image
 #' @import stevedore
 #' @param code An expression or string of R code
 #' @param docker_image A docker image name
@@ -41,6 +41,31 @@ run <- function(code, docker_image){
 
   # Run using stevedore
   result <- docker$container$run(docker_image, c("Rscript", "-e", full_code), rm = TRUE)
+
+  return(result)
+}
+
+
+#' Run a R file in a docker image
+#'
+#' Run a R file in a docker image
+#' @import stevedore
+#' @param r_file A file of R code
+#' @param docker_image A docker image name
+#' @export
+#' @examples
+#' library("altRnative")
+#' run_file("check_packages.R", "ismailsunni/gnur-3.6.1-debian-geospatial")
+run_file <- function(r_file, docker_image){
+  # Prepare docker container
+  docker <- stevedore::docker_client()
+
+  # Debug purpose
+  print("Full command")
+  print(c("Rscript", r_file))
+
+  # Run using stevedore
+  result <- docker$container$run(docker_image, c("Rscript", r_file), rm = TRUE)
 
   return(result)
 }

@@ -12,7 +12,7 @@ run(code, docker_image)
 \item{docker_image}{A docker image name}
 }
 \description{
-Run a a code as a string in a docker image
+Run a code as a string in a docker image
 }
 \examples{
 library("altRnative")
