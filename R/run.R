@@ -18,13 +18,15 @@
 #'
 #' # With multiple string
 #' run(c("a = 1 + 1", "b = a + 2", "print(b)"), "ismailsunni/gnur-3.6.1-debian-geospatial")
-#' run(c("install.packages('ctv')", "library('ctv')", "available.views()"), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' code = c("install.packages('ctv')", "library('ctv')", "available.views()")
+#' run(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
 #' # With multiple expressions
 #' # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
-#' run(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' # run(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
 #' # This one is working
-#' run(c(expression(install.packages("ctv")), expression(library("ctv")), expression(available.views())), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' code = expression(install.packages("ctv"), library("ctv"), available.views())
+#' run(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 run <- function(code, docker_image){
   # Prepare docker container
   docker <- stevedore::docker_client()
