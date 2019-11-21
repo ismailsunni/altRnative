@@ -35,6 +35,19 @@ supported_Rs <- function(){
     )
   )
 }
+#' Return a compatibility table
+#'
+#' Return a table that consist of platfom, R implementation, docker image name.
+#' @import dplyr
+#' @export
+#' @examples
+#' compatibility_table()
+compatibility_table <- function(){
+  tibble(
+    dist = c("debian", "ubuntu"),
+    R = c("gnu-r", "mro"),
+    image_name = c("ismailsunni/gnur-3.6.1-debian-geospatial", "ismailsunni/mro-3.5.3-ubuntu-geospatial"))
+}
 
 #' Get docker image for a combination of a platform and a R implementation.
 #'
@@ -48,11 +61,8 @@ supported_Rs <- function(){
 #' docker_image("debian", "gnu-r")
 #' docker_image("ubuntu", "mro")
 #' docker_image("debian", "renjin")
-docker_image <- function(platform, r_implementation){
-  table <- tibble(
-    dist = c("debian", "ubuntu"),
-    R = c("gnu-r", "mro"),
-    image_name = c("ismailsunni/gnur-3.6.1-debian-geospatial", "ismailsunni/mro-3.5.3-ubuntu-geospatial"))
+docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
+  table <- compatibility_table()
   result <- dplyr::filter(table, dist == platform, R == r_implementation)
   return( pull(result, "image_name"))
 }
