@@ -57,7 +57,8 @@ run <- function(code, docker_image){
 #' @export
 #' @examples
 #' library("altRnative")
-#' run_file("check_packages.R", "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' file_path <- system.file('extdata/test.R', package = 'altRnative')
+#' run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
 run_file <- function(r_file, docker_image){
   # Prepare docker container
   docker <- stevedore::docker_client()
@@ -66,8 +67,22 @@ run_file <- function(r_file, docker_image){
   print("Full command")
   print(c("Rscript", r_file))
 
-  # Run using stevedore
-  result <- docker$container$run(docker_image, c("Rscript", r_file), rm = TRUE)
+  # Create container
+  container <- docker$container$create(docker_image, c("R", "--no-save"), tty = TRUE)
+  container$start()
+  # Get working directory
+  work_dir <- container$exec("pwd")$output
+  # Remove new line character
+  work_dir <- gsub("\n", "", work_dir)
+  # Copy R file to docker, need to create the directory first
+  dir_r_file <- dirname(r_file)
+  container$exec(c("mkdir", "-p", dir_r_file))
+  docker_file_path <- gsub("//", "/", r_file)
+  container$cp_in(r_file, docker_file_path)
+  # Run the file
+  result <- container$exec(c("Rscript", docker_file_path))
 
+  container$stop()
+  container$remove()
   return(result)
 }

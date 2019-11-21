@@ -16,5 +16,6 @@ Run a R file in a docker image
 }
 \examples{
 library("altRnative")
-run_file("check_packages.R", "ismailsunni/gnur-3.6.1-debian-geospatial")
+file_path <- system.file('extdata/test.R', package = 'altRnative')
+run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
 }
