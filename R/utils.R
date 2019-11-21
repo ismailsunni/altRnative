@@ -64,7 +64,7 @@ compatibility_table <- function(){
 docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
   table <- compatibility_table()
   result <- dplyr::filter(table, dist == platform, R == r_implementation)
-  return( pull(result, "image_name"))
+  return(pull(result, "image_name"))
 }
 
 

@@ -2,20 +2,23 @@
 % Please edit documentation in R/run.R
 \name{run_file}
 \alias{run_file}
-\title{Run a R file in a docker image}
+\title{Run a R file in a docker image of a platform and an R implementation}
 \usage{
-run_file(r_file, docker_image)
+run_file(r_file, platform = "debian", r_implementation = "gnu-r")
 }
 \arguments{
 \item{r_file}{A file of R code}
 
-\item{docker_image}{A docker image name}
+\item{platform}{The platform name see \link{supported_platforms}}
+
+\item{r_implementation}{The R implementation name. See \link{supported_Rs}}
 }
 \description{
-Run a R file in a docker image
+Run a R file in a docker image  of a platform and an R implementation
 }
 \examples{
 library("altRnative")
 file_path <- system.file('extdata/test.R', package = 'altRnative')
-run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
+run_file(file_path, 'debian', 'gnu-r')
+run_file(file_path, 'not-debian', 'gnu-r')
 }

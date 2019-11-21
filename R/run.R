@@ -9,25 +9,25 @@
 #' library("altRnative")
 #'
 #' # With string
-#' run("a = 1 + 1", "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code("a = 1 + 1", "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
 #' # With expression
-#' run(expression(1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
-#' run(expression(a = 1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
-#' run(expression(install.packages("ctv")), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code(expression(1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code(expression(a = 1 + 1), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code(expression(install.packages("ctv")), "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
 #' # With multiple string
-#' run(c("a = 1 + 1", "b = a + 2", "print(b)"), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code(c("a = 1 + 1", "b = a + 2", "print(b)"), "ismailsunni/gnur-3.6.1-debian-geospatial")
 #' code = c("install.packages('ctv')", "library('ctv')", "available.views()")
-#' run(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
 #' # With multiple expressions
 #' # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
-#' # run(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' # docker_run_code(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
 #' # This one is working
 #' code = expression(install.packages("ctv"), library("ctv"), available.views())
-#' run(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
-run <- function(code, docker_image){
+#' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
+docker_run_code <- function(code, docker_image){
   # Prepare docker container
   docker <- stevedore::docker_client()
 
@@ -58,8 +58,8 @@ run <- function(code, docker_image){
 #' @examples
 #' library("altRnative")
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
-#' run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
-run_file <- function(r_file, docker_image){
+#' docker_run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
+docker_run_file <- function(r_file, docker_image){
   # Prepare docker container
   docker <- stevedore::docker_client()
 
@@ -80,9 +80,47 @@ run_file <- function(r_file, docker_image){
   docker_file_path <- gsub("//", "/", r_file)
   container$cp_in(r_file, docker_file_path)
   # Run the file
+  # TODO: Need to be modified based on the R implementation
   result <- container$exec(c("Rscript", docker_file_path))
 
   container$stop()
   container$remove()
   return(result)
+}
+
+#' Run a R file in a docker image of a platform and an R implementation
+#'
+#' Run a R file in a docker image  of a platform and an R implementation
+#' @param r_file A file of R code
+#' @param platform The platform name see \link{supported_platforms}
+#' @param r_implementation The R implementation name. See \link{supported_Rs}
+#' @export
+#' @examples
+#' library("altRnative")
+#' file_path <- system.file('extdata/test.R', package = 'altRnative')
+#' run_file(file_path, 'debian', 'gnu-r')
+#' run_file(file_path, 'not-debian', 'gnu-r')
+run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r"){
+  image_name <- docker_image(platform, r_implementation)
+  if (length(image_name) > 0){
+    return(docker_run_file(r_file, image_name))
+  } else {
+    print(paste("No Docker Image for", platform, "and", r_implementation))
+  }
+}
+
+#' Run a R file in a docker image  of a platform and an R implementation
+#' @param code An expression or string of R code
+#' @param platform The platform name see \link{supported_platforms}
+#' @param r_implementation The R implementation name. See \link{supported_Rs}
+#' @export
+#' @examples
+#' run_code("a = 1 + 1", 'debian', 'gnu-r')
+run_code <- function(code, platform = "debian", r_implementation = "gnu-r"){
+  image_name <- docker_image(platform, r_implementation)
+  if (length(image_name) > 0){
+    return(docker_run_code(code, image_name))
+  } else {
+    print(paste("No Docker Image for", platform, "and", r_implementation))
+  }
 }
