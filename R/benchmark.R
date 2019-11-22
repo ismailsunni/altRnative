@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' benchmarks_code(code = "1 + 1")
-benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu")){
+benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu"), ...){
   print(code)
   print(r_implementations)
   print(platforms)
@@ -23,7 +23,7 @@ benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platfor
       }
     }
   }
-  microbenchmark::microbenchmark(list = expressions, times = 1)
+  microbenchmark::microbenchmark(list = expressions, ...)
 }
 
 
@@ -38,7 +38,7 @@ benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platfor
 #' @examples
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' benchmarks_file(file_path)
-benchmarks_file <- function(r_file, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu")){
+benchmarks_file <- function(r_file, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu"), ...){
   print(r_file)
   print(r_implementations)
   print(platforms)
@@ -53,5 +53,5 @@ benchmarks_file <- function(r_file, r_implementations = c("gnu-r", "mro"), platf
       }
     }
   }
-  microbenchmark::microbenchmark(list = expressions, times = 1)
+  microbenchmark::microbenchmark(list = expressions, ...)
 }

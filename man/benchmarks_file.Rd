@@ -5,7 +5,7 @@
 \title{Run benchmark for R code file across R implementation and platform}
 \usage{
 benchmarks_file(r_file, r_implementations = c("gnu-r", "mro"),
-  platforms = c("debian", "ubuntu"))
+  platforms = c("debian", "ubuntu"), ...)
 }
 \arguments{
 \item{r_file}{A file of R code}

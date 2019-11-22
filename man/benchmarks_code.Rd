@@ -5,7 +5,7 @@
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
 benchmarks_code(code, r_implementations = c("gnu-r", "mro"),
-  platforms = c("debian", "ubuntu"))
+  platforms = c("debian", "ubuntu"), ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
