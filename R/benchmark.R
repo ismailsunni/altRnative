@@ -3,12 +3,12 @@
 #' Run benchmark for R code across R implementation and platform.
 #' @import microbenchmark
 #' @param code An expression or string of R code
-#' @param r_implementations List of R implementation
 #' @param platforms List of platform
+#' @param r_implementations List of R implementation
 #' @export
 #' @examples
-#' benchmarks_code(code = "1 + 1")
-benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu"), ...){
+#' benchmarks_code(code = "1 + 1", times = 3)
+benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), ...){
   print(code)
   print(r_implementations)
   print(platforms)
@@ -37,8 +37,8 @@ benchmarks_code <- function(code, r_implementations = c("gnu-r", "mro"), platfor
 #' @export
 #' @examples
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
-#' benchmarks_file(file_path)
-benchmarks_file <- function(r_file, r_implementations = c("gnu-r", "mro"), platforms = c("debian", "ubuntu"), ...){
+#' benchmarks_file(file_path, times = 3)
+benchmarks_file <- function(r_file, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), ...){
   print(r_file)
   print(r_implementations)
   print(platforms)

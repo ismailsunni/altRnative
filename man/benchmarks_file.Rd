@@ -4,20 +4,20 @@
 \alias{benchmarks_file}
 \title{Run benchmark for R code file across R implementation and platform}
 \usage{
-benchmarks_file(r_file, r_implementations = c("gnu-r", "mro"),
-  platforms = c("debian", "ubuntu"), ...)
+benchmarks_file(r_file, platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"), ...)
 }
 \arguments{
 \item{r_file}{A file of R code}
 
-\item{r_implementations}{List of R implementation}
-
 \item{platforms}{List of platform}
+
+\item{r_implementations}{List of R implementation}
 }
 \description{
 Run benchmark for R code file across R implementation and platform.
 }
 \examples{
 file_path <- system.file('extdata/test.R', package = 'altRnative')
-benchmarks_file(file_path)
+benchmarks_file(file_path, times = 3)
 }

@@ -4,19 +4,19 @@
 \alias{benchmarks_code}
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
-benchmarks_code(code, r_implementations = c("gnu-r", "mro"),
-  platforms = c("debian", "ubuntu"), ...)
+benchmarks_code(code, platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"), ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
 
-\item{r_implementations}{List of R implementation}
-
 \item{platforms}{List of platform}
+
+\item{r_implementations}{List of R implementation}
 }
 \description{
 Run benchmark for R code across R implementation and platform.
 }
 \examples{
-benchmarks_code(code = "1 + 1")
+benchmarks_code(code = "1 + 1", times = 3)
 }
