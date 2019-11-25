@@ -5,7 +5,7 @@
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
 benchmarks_code(code, platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"), ...)
+  r_implementations = c("gnu-r", "mro"), times = 3, ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -13,6 +13,8 @@ benchmarks_code(code, platforms = c("debian", "ubuntu"),
 \item{platforms}{List of platform}
 
 \item{r_implementations}{List of R implementation}
+
+\item{times}{How many times the code will be run. Passed to \link{microbenchmark}}
 
 \item{...}{Parameters for \link{microbenchmark}}
 }
