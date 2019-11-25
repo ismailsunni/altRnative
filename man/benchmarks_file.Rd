@@ -13,6 +13,8 @@ benchmarks_file(r_file, platforms = c("debian", "ubuntu"),
 \item{platforms}{List of platform}
 
 \item{r_implementations}{List of R implementation}
+
+\item{...}{Parameters for \link{microbenchmark}}
 }
 \description{
 Run benchmark for R code file across R implementation and platform.

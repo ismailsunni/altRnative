@@ -5,6 +5,7 @@
 #' @param code An expression or string of R code
 #' @param platforms List of platform
 #' @param r_implementations List of R implementation
+#' @param ... Parameters for \link{microbenchmark}
 #' @export
 #' @examples
 #' benchmarks_code(code = "1 + 1", times = 3)
@@ -34,6 +35,7 @@ benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implement
 #' @param r_file A file of R code
 #' @param r_implementations List of R implementation
 #' @param platforms List of platform
+#' @param ... Parameters for \link{microbenchmark}
 #' @export
 #' @examples
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
