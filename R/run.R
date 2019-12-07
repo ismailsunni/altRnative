@@ -4,6 +4,7 @@
 #' @import stevedore
 #' @param code An expression or string of R code
 #' @param docker_image A docker image name
+#' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
 #' library("altRnative")
@@ -27,7 +28,10 @@
 #' # This one is working
 #' code = expression(install.packages("ctv"), library("ctv"), available.views())
 #' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
-docker_run_code <- function(code, docker_image){
+#' # This code below is for running sample, need to set proper directory
+#' # code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
+#' # docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial", volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
+docker_run_code <- function(code, docker_image, volumes = NULL){
   # Prepare docker container
   docker <- stevedore::docker_client()
 
@@ -42,7 +46,7 @@ docker_run_code <- function(code, docker_image){
   print(c("Rscript", "-e", full_code))
 
   # Run using stevedore
-  result <- docker$container$run(docker_image, c("Rscript", "-e", full_code), rm = TRUE)
+  result <- docker$container$run(docker_image, c("Rscript", "-e", full_code), rm = TRUE, volumes = volumes)
 
   return(result)
 }
@@ -54,12 +58,13 @@ docker_run_code <- function(code, docker_image){
 #' @import stevedore
 #' @param r_file A file of R code
 #' @param docker_image A docker image name
+#' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
 #' library("altRnative")
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' docker_run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
-docker_run_file <- function(r_file, docker_image){
+docker_run_file <- function(r_file, docker_image, volumes = NULL){
   # Prepare docker container
   docker <- stevedore::docker_client()
 
@@ -68,7 +73,7 @@ docker_run_file <- function(r_file, docker_image){
   print(c("Rscript", r_file))
 
   # Create container
-  container <- docker$container$create(docker_image, c("R", "--no-save"), tty = TRUE)
+  container <- docker$container$create(docker_image, c("R", "--no-save"), tty = TRUE, volumes = volumes)
   container$start()
   # Get working directory
   work_dir <- container$exec("pwd")$output

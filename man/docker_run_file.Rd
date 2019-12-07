@@ -4,12 +4,14 @@
 \alias{docker_run_file}
 \title{Run a R file in a docker image}
 \usage{
-docker_run_file(r_file, docker_image)
+docker_run_file(r_file, docker_image, volumes = NULL)
 }
 \arguments{
 \item{r_file}{A file of R code}
 
 \item{docker_image}{A docker image name}
+
+\item{volumes}{Volume mapping from host to container}
 }
 \description{
 Run a R file in a docker image
