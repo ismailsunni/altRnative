@@ -4,7 +4,8 @@
 \alias{run_code}
 \title{Run a R file in a docker image  of a platform and an R implementation}
 \usage{
-run_code(code, platform = "debian", r_implementation = "gnu-r")
+run_code(code, platform = "debian", r_implementation = "gnu-r",
+  volumes = NULL)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -12,6 +13,8 @@ run_code(code, platform = "debian", r_implementation = "gnu-r")
 \item{platform}{The platform name see \link{supported_platforms}}
 
 \item{r_implementation}{The R implementation name. See \link{supported_Rs}}
+
+\item{volumes}{Volume mapping from host to container}
 }
 \description{
 Run a R file in a docker image  of a platform and an R implementation

@@ -5,12 +5,16 @@
 #' @param code An expression or string of R code
 #' @param platforms List of platform
 #' @param r_implementations List of R implementation
+#' @param volumes Volume mapping from host to container. Passed to \link{run_code}.
 #' @param times How many times the code will be run. Passed to \link{microbenchmark}
 #' @param ... Parameters for \link{microbenchmark}
 #' @export
 #' @examples
 #' benchmarks_code(code = "1 + 1", times = 3)
-benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), times = 3, ...){
+#' # This code below is for running sample, need to set proper directory
+#' # code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
+#' # benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
+benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3, ...){
   print(code)
   print(r_implementations)
   print(platforms)
@@ -18,7 +22,7 @@ benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implement
   for (r_implementation in r_implementations){
     for(platform in platforms){
       if (length(docker_image(platform, r_implementation)) > 0){
-        e = call("run_code", code, platform, r_implementation)
+        e = call("run_code", code, platform, r_implementation, volumes)
         expressions[[paste(r_implementation, "on", platform)]] <- e
       } else {
         print(paste('Docker image for', r_implementation, "and", platform, "is not supported"))

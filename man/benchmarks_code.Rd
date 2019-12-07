@@ -5,7 +5,8 @@
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
 benchmarks_code(code, platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"), times = 3, ...)
+  r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3,
+  ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -13,6 +14,8 @@ benchmarks_code(code, platforms = c("debian", "ubuntu"),
 \item{platforms}{List of platform}
 
 \item{r_implementations}{List of R implementation}
+
+\item{volumes}{Volume mapping from host to container. Passed to \link{run_code}.}
 
 \item{times}{How many times the code will be run. Passed to \link{microbenchmark}}
 
@@ -23,4 +26,7 @@ Run benchmark for R code across R implementation and platform.
 }
 \examples{
 benchmarks_code(code = "1 + 1", times = 3)
+# This code below is for running sample, need to set proper directory
+# code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
+# benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
 }

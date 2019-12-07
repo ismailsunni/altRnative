@@ -118,13 +118,14 @@ run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r"){
 #' @param code An expression or string of R code
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
+#' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
 #' run_code("a = 1 + 1", 'debian', 'gnu-r')
-run_code <- function(code, platform = "debian", r_implementation = "gnu-r"){
+run_code <- function(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL){
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
-    return(docker_run_code(code, image_name))
+    return(docker_run_code(code, image_name, volumes = volumes))
   } else {
     print(paste("No Docker Image for", platform, "and", r_implementation))
   }
