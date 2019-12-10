@@ -12,8 +12,9 @@
 #' @examples
 #' benchmarks_code(code = "1 + 1", times = 3)
 #' # This code below is for running sample, need to set proper directory
-#' # code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
+#' # code = expression(setwd('/home/docker/sdsr'), bookdown::clean_book(TRUE), unlink('_book/', recursive=TRUE), unlink('_bookdown_files', recursive=TRUE), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
 #' # benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
+# benchmarks_code(code = code,platforms = c("debian", "ubuntu", "fedora"), volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
 benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3, ...){
   print(code)
   print(r_implementations)

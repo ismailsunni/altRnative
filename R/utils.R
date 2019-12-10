@@ -44,9 +44,14 @@ supported_Rs <- function(){
 #' compatibility_table()
 compatibility_table <- function(){
   tibble(
-    dist = c("debian", "ubuntu"),
-    R = c("gnu-r", "mro"),
-    image_name = c("ismailsunni/gnur-3.6.1-debian-geospatial", "ismailsunni/mro-3.5.3-ubuntu-geospatial"))
+    dist = c("debian", "ubuntu", "fedora"),
+    R = c("gnu-r", "mro", "gnu-r"),
+    image_name = c(
+      "ismailsunni/gnur-3.6.1-debian-geospatial",
+      "ismailsunni/mro-3.5.3-ubuntu-geospatial",
+      "ismailsunni/gnur-3.6.1-fedora-geospatial"
+      )
+    )
 }
 
 #' Get docker image for a combination of a platform and a R implementation.

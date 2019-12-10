@@ -29,4 +29,5 @@ benchmarks_code(code = "1 + 1", times = 3)
 # This code below is for running sample, need to set proper directory
 # code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
 # benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
+# benchmarks_code(code = code,platforms = c("debian", "ubuntu", "fedora"), volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
 }
