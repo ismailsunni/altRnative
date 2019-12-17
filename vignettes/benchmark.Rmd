@@ -1,0 +1,76 @@
+---
+title: "Geospatial Benchmark"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{benchmark}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+IS_EVAL = FALSE
+```
+
+This vignette explain about the steps that is taken to do benchmark for geospatial workfflow across different combination of R implementation and operating system and platform using `altRnative` R package.
+
+To load the package, run this command:
+
+```{r setup}
+library(altRnative)
+```
+
+First, we will check that the package is working properly by running very simple code (e.g. `1+1`).
+
+```{r simple_check, message='hide', results=FALSE, eval=IS_EVAL}
+benchmark_result = benchmarks_code(
+  code = "1 + 1", 
+  r_implementations = c('gnu-r', 'mro'), 
+  platforms = c('debian', 'ubuntu', 'fedora'),  
+  times = 10
+  )
+```
+
+The result is a micorbenchmark object that can be printed or create the graph (using `ggplot2`)
+```{r simple_result, eval=IS_EVAL}
+print(benchmark_result)
+library('ggplot2')
+autoplot(benchmark_result)
+```
+
+Next, we use Spatial Data Science with R book from Prof. Edzer Pebesma as the code for geospatial benchmark. I have modified the book to remove the part that using `stars` data and Air Quality data since both are very big. The modified book can be obtained from [my fork on Github](https://github.com/ismailsunni/sdsr). You can eithe download or clone using git to your local machine.
+
+```{bash clone_book, eval=FALSE}
+cd /home/ismailsunni/dev/r
+git clone git@github.com:ismailsunni/sdsr.git
+```
+
+After that you can open an R session and run the benchmark. First you need to define the R code/script that will be benchmarked. In this case, you need to set the working directory to mapped directory inside the container (e.g. `/home/docker/sdsr`). Cleaning the cache and removing old result is needed also since it will disturb the benchmarking process. Lastly, `render_book` will run all the code in the book and render it.
+```{R sdsr_code, eval=IS_EVAL}
+code = expression(
+  setwd('/home/docker/sdsr'), 
+  bookdown::clean_book(TRUE), 
+  unlink('_book/', recursive=TRUE), 
+  unlink('_bookdown_files', recursive=TRUE), 
+  bookdown::render_book('index.Rmd', 'bookdown::gitbook')
+  )
+```
+In this step, you will run the benchmark using the previous `code` as input. Please note that the `volumes` in the `benchmark_code` function is mapped from your `sdsr` directory. In my case, it is `/home/ismailsunni/dev/r/sdsr`. Other arguments are `platforms` and `r_implementations` to set the platform and R implementations of the docker containers. Lastly, `times` argument is used to specify how many times the code needs to be run in the benchmark process.
+```{R sdsr_benchmark, eval=IS_EVAL}
+sdsr_result = benchmarks_code(
+  code = code, 
+  platforms = c("debian", "ubuntu", "fedora"), 
+  r_implementations = c('gnu-r', 'mro'), 
+  volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', 
+  times = 3
+  )
+```
+
+From here, you can see the result or plot the graph like the previous result.
+```{r sdsr_result, eval=IS_EVAL}
+print(sdsr_result)
+autoplot(sdsr_result)
+```

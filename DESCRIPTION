@@ -8,7 +8,11 @@ Description: This package enables you to run your R code on different R implemen
     It will run your code on a docker container, thus you need docker installed in your system. Moreover, you can run a benchmark for your code to on supported R implementations and platform to see which one is the fastest.
 License: MIT + file LICENSE
 Imports: stevedore, dplyr, microbenchmark
-Suggests: ctv
+Suggests: 
+    ctv,
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1.9000
+VignetteBuilder: knitr
