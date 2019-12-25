@@ -23,6 +23,14 @@ To load the package, run this command:
 library(altRnative)
 ```
 
+Since this package is using docker image, there is a function to pull the needed docker images:
+
+```{r pull_image, message='hide', results=FALSE, eval=IS_EVAL}
+pull_docker_image(c('gnu-r', 'mro'), c('debian', 'ubuntu', 'fedora'))
+```
+
+You can also specify the pulling in the `benchmark_code` function by adding `pull_image` parameter and set it to `TRUE`. The default value is `FALSE` since mostly you only need to run it once.
+
 First, we will check that the package is working properly by running very simple code (e.g. `1+1`).
 
 ```{r simple_check, message='hide', results=FALSE, eval=IS_EVAL}

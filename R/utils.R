@@ -72,5 +72,28 @@ docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
   return(pull(result, "image_name"))
 }
 
-
+#' Pull docker image from docker hub. Public image only.
+#'
+#' For supported docker images only.
+#' @import stevedore
+#' @param platforms List of platform
+#' @param r_implementations List of R implementation
+#' @export
+#' @examples
+#' \dontrun{
+#' pull_docker_image('debian', 'gnu-r')
+#' }
+#'
+pull_docker_image <- function(platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro")){
+  docker = docker_client()
+  for (r_implementation in r_implementations){
+    for(platform in platforms){
+      if (length(docker_image(platform, r_implementation)) > 0){
+        docker$image$pull(docker_image(platform, r_implementation))
+      } else {
+        print(paste('Docker image for', r_implementation, "and", platform, "is not supported"))
+      }
+    }
+  }
+}
 

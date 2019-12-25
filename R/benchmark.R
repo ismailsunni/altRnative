@@ -7,6 +7,7 @@
 #' @param r_implementations List of R implementation
 #' @param volumes Volume mapping from host to container. Passed to \link{run_code}.
 #' @param times How many times the code will be run. Passed to \link{microbenchmark}
+#' @param pull_image If set to TRUE, the needed docker image will be pulled first.
 #' @param ... Parameters for \link{microbenchmark}
 #' @export
 #' @examples
@@ -14,12 +15,15 @@
 #' # This code below is for running sample, need to set proper directory
 #' # code = expression(setwd('/home/docker/sdsr'), bookdown::clean_book(TRUE), unlink('_book/', recursive=TRUE), unlink('_bookdown_files', recursive=TRUE), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
 #' # benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
-# benchmarks_code(code = code,platforms = c("debian", "ubuntu", "fedora"), volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
-benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3, ...){
+# # benchmarks_code(code = code,platforms = c("debian", "ubuntu", "fedora"), volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
+benchmarks_code <- function(code, platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3, pull_image = FALSE, ...){
   print(code)
   print(r_implementations)
   print(platforms)
   expressions = list()
+  if (pull_image){
+    pull_docker_image(platforms, r_implementations)
+  }
   for (r_implementation in r_implementations){
     for(platform in platforms){
       if (length(docker_image(platform, r_implementation)) > 0){

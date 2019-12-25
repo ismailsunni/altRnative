@@ -6,7 +6,7 @@
 \usage{
 benchmarks_code(code, platforms = c("debian", "ubuntu"),
   r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3,
-  ...)
+  pull_image = FALSE, ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -18,6 +18,8 @@ benchmarks_code(code, platforms = c("debian", "ubuntu"),
 \item{volumes}{Volume mapping from host to container. Passed to \link{run_code}.}
 
 \item{times}{How many times the code will be run. Passed to \link{microbenchmark}}
+
+\item{pull_image}{If set to TRUE, the needed docker image will be pulled first.}
 
 \item{...}{Parameters for \link{microbenchmark}}
 }
