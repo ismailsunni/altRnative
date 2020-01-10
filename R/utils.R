@@ -44,12 +44,14 @@ supported_Rs <- function(){
 #' compatibility_table()
 compatibility_table <- function(){
   tibble(
-    dist = c("debian", "ubuntu", "fedora"),
-    R = c("gnu-r", "mro", "gnu-r"),
+    dist = c("debian", "ubuntu", "fedora", "archlinux", "fedora"),
+    R = c("gnu-r", "mro", "gnu-r", "gnu-r", "mro"),
     image_name = c(
       "ismailsunni/gnur-3.6.1-debian-geospatial",
       "ismailsunni/mro-3.5.3-ubuntu-geospatial",
-      "ismailsunni/gnur-3.6.1-fedora-geospatial"
+      "ismailsunni/gnur-3.6.1-fedora-geospatial",
+      "ismailsunni/gnur-3.6.1-archlinux-geospatial",
+      "ismailsunni/mro-3.5.3-fedora-30-geospatial"
       )
     )
 }

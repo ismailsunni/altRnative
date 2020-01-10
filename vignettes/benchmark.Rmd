@@ -37,7 +37,7 @@ First, we will check that the package is working properly by running very simple
 benchmark_result = benchmarks_code(
   code = "1 + 1", 
   r_implementations = c('gnu-r', 'mro'), 
-  platforms = c('debian', 'ubuntu', 'fedora'),  
+  platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
   times = 10
   )
 ```
@@ -70,7 +70,7 @@ In this step, you will run the benchmark using the previous `code` as input. Ple
 ```{R sdsr_benchmark, eval=IS_EVAL}
 sdsr_result = benchmarks_code(
   code = code, 
-  platforms = c("debian", "ubuntu", "fedora"), 
+  platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
   r_implementations = c('gnu-r', 'mro'), 
   volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', 
   times = 3
