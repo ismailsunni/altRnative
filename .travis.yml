@@ -1,0 +1,30 @@
+language: R
+cache: packages
+
+services:
+  - docker
+
+r:
+  - release
+#  - oldrel
+  - devel
+
+sudo: required
+dist: xenial
+
+addons:
+  apt:
+    packages:
+      # needed by sys, https://github.com/jeroen/sys/blob/master/.travis.yml
+      - iputils-ping
+      - libapparmor-dev
+
+before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+  deploy:
+    provider: script
+    script: Rscript -e 'pkgdown::deploy_site_github()'
+    skip_cleanup: true
+
+# don't do vignettes (relevant when trying to get on CRAN)
+r_build_args: "--no-manual --no-build-vignettes"
+r_check_args: "--no-manual --ignore-vignettes" # --as-cran
