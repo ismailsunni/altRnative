@@ -60,6 +60,7 @@ compatibility_table <- function(){
 #'
 #' Return the name of docker image. Return empty string if the combination is not supported.
 #' @import dplyr
+#' @importFrom rlang .data
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
 #' @export
@@ -70,8 +71,8 @@ compatibility_table <- function(){
 #' docker_image("debian", "renjin")
 docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
   table <- compatibility_table()
-  result <- dplyr::filter(table, dist == platform, R == r_implementation)
-  return(pull(result, "image_name"))
+  # import rlang::.data to avoid R check errors, see https://dplyr.tidyverse.org/articles/programming.html
+  result <- dplyr::filter(table, .data$dist == platform, .data$R == r_implementation)
 }
 
 #' Pull docker image from docker hub. Public image only.

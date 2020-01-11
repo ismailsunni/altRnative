@@ -17,7 +17,14 @@ Maintainer: Ismail Sunni <imajimatika@gmail.com>
 Description: This package enables you to run your R code on different R implementation (e.g. Microsoft R Open) and platforms (e.g. Ubuntu, Fedora, Arch Linux).
     It will run your code on a docker container, thus you need docker installed in your system. Moreover, you can run a benchmark for your code to on supported R implementations and platform to see which one is the fastest.
 License: MIT + file LICENSE
-Imports: stevedore, dplyr, microbenchmark
+URL: https://github.com/ismailsunni/altRnative/
+BugReports: https://github.com/ismailsunni/altRnative/issues
+Depends: R (>= 3.6.0)
+Imports:
+    stevedore,
+    dplyr,
+    microbenchmark,
+    rlang
 Suggests: 
     ctv,
     knitr,
