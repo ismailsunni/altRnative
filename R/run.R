@@ -1,7 +1,7 @@
 #' Run a code in a docker image
 #'
 #' Run a code as a string in a docker image
-#' @import stevedore
+#' @importFrom stevedore docker_client
 #' @param code An expression or string of R code
 #' @param docker_image A docker image name
 #' @param volumes Volume mapping from host to container
@@ -64,7 +64,7 @@ docker_run_code <- function(code, docker_image, volumes = NULL){
 #' Run a R file in a docker image
 #'
 #' Run a R file in a docker image
-#' @import stevedore
+#' @importFrom stevedore docker_client
 #' @param r_file A file of R code
 #' @param docker_image A docker image name
 #' @param volumes Volume mapping from host to container

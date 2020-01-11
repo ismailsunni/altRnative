@@ -38,12 +38,12 @@ supported_Rs <- function(){
 #' Return a compatibility table
 #'
 #' Return a table that consist of platfom, R implementation, docker image name.
-#' @import dplyr
+#' @importFrom dplyr tibble
 #' @export
 #' @examples
 #' compatibility_table()
 compatibility_table <- function(){
-  tibble(
+  dplyr::tibble(
     dist = c("debian", "ubuntu", "fedora", "archlinux", "fedora"),
     R = c("gnu-r", "mro", "gnu-r", "gnu-r", "mro"),
     image_name = c(
@@ -59,7 +59,7 @@ compatibility_table <- function(){
 #' Get docker image for a combination of a platform and a R implementation.
 #'
 #' Return the name of docker image. Return empty string if the combination is not supported.
-#' @import dplyr
+#' @importFrom dplyr filter pull
 #' @importFrom rlang .data
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
@@ -73,12 +73,13 @@ docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
   table <- compatibility_table()
   # import rlang::.data to avoid R check errors, see https://dplyr.tidyverse.org/articles/programming.html
   result <- dplyr::filter(table, .data$dist == platform, .data$R == r_implementation)
+  return(dplyr::pull(result, "image_name"))
 }
 
 #' Pull docker image from docker hub. Public image only.
 #'
 #' For supported docker images only.
-#' @import stevedore
+#' @importFrom stevedore docker_client
 #' @param platforms List of platform
 #' @param r_implementations List of R implementation
 #' @export
@@ -88,7 +89,7 @@ docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
 #' }
 #'
 pull_docker_image <- function(platforms = c("debian", "ubuntu"), r_implementations = c("gnu-r", "mro")){
-  docker = docker_client()
+  docker = stevedore::docker_client()
   for (r_implementation in r_implementations){
     for(platform in platforms){
       if (length(docker_image(platform, r_implementation)) > 0){
