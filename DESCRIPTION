@@ -1,7 +1,7 @@
 Package: altRnative
 Type: Package
 Title: Run and Benchmark R code on different R implementation and platform
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     c(person(given = "Ismail",
              family = "Sunni",
