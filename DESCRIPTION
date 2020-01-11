@@ -2,7 +2,17 @@ Package: altRnative
 Type: Package
 Title: Run and Benchmark R code on different R implementation and platform
 Version: 0.1.0
-Author: Ismail Sunni
+Authors@R: 
+    c(person(given = "Ismail",
+             family = "Sunni",
+             role = c("aut", "cre"),
+             email = "imajimatika@gmail.com"),
+      person(given = "Daniel",
+             family = "Nuest",
+             role = c("aut"),
+             email = "daniel.nuest@uni-muenster.de",
+             comment = c(ORCID = "0000-0003-2392-6140")))
+Author: Ismail Sunni [aut, cre], Daniel Nuest [aut]
 Maintainer: Ismail Sunni <imajimatika@gmail.com>
 Description: This package enables you to run your R code on different R implementation (e.g. Microsoft R Open) and platforms (e.g. Ubuntu, Fedora, Arch Linux).
     It will run your code on a docker container, thus you need docker installed in your system. Moreover, you can run a benchmark for your code to on supported R implementations and platform to see which one is the fastest.
