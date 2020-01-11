@@ -4,8 +4,7 @@
 \alias{run_code}
 \title{Run a R file in a docker image  of a platform and an R implementation}
 \usage{
-run_code(code, platform = "debian", r_implementation = "gnu-r",
-  volumes = NULL)
+run_code(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL)
 }
 \arguments{
 \item{code}{An expression or string of R code}

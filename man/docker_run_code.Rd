@@ -34,11 +34,20 @@ docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 
 # With multiple expressions
 # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
-# docker_run_code(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
+\dontrun{
+# docker_run_code(c(expression(a = 1 + 1, b = a + 2)),
+  "ismailsunni/gnur-3.6.1-debian-geospatial")
+}
+
 # This one is working
 code = expression(install.packages("ctv"), library("ctv"), available.views())
 docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
+
 # This code below is for running sample, need to set proper directory
-# code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
-# docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial", volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
+\dontrun{
+code = expression(setwd('/home/docker/sdsr'),
+                  bookdown::render_book('index.Rmd', 'bookdown::gitbook'))¸
+docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial",
+                volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
+}
 }

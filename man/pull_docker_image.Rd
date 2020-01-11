@@ -4,8 +4,10 @@
 \alias{pull_docker_image}
 \title{Pull docker image from docker hub. Public image only.}
 \usage{
-pull_docker_image(platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"))
+pull_docker_image(
+  platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro")
+)
 }
 \arguments{
 \item{platforms}{List of platform}
