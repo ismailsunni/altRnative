@@ -32,7 +32,7 @@ benchmarks_code <- function(code,
                             pull_image = FALSE,
                             ...){
   benchmarks("run_code",
-             code = code,
+             code_or_file = code,
              platforms = platforms,
              r_implementations = r_implementations,
              volumes = volumes,
