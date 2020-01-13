@@ -126,7 +126,7 @@
     <p>Run a code as a string in a docker image</p>
     </div>
 
-    <pre class="usage"><span class='fu'>docker_run_code</span>(<span class='no'>code</span>, <span class='no'>docker_image</span>, <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>docker_run_code</span>(<span class='no'>code</span>, <span class='no'>docker_image</span>, <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,11 +143,43 @@
       <th>volumes</th>
       <td><p>Volume mapping from host to container</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Parameters passed on to stevedore client creation and container running functions</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># With string</span>
+<span class='fu'>docker_run_code</span>(<span class='st'>"a = 1 + 1"</span>, <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+
+<span class='co'># With expression</span>
+<span class='fu'>docker_run_code</span>(<span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fl'>1</span> + <span class='fl'>1</span>), <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+<span class='fu'>docker_run_code</span>(<span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span> + <span class='fl'>1</span>), <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+<span class='fu'>docker_run_code</span>(<span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span>(<span class='st'>"ctv"</span>)), <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+
+<span class='co'># With multiple string</span>
+<span class='fu'>docker_run_code</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a = 1 + 1"</span>, <span class='st'>"b = a + 2"</span>, <span class='st'>"print(b)"</span>), <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+<span class='no'>code</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"install.packages('ctv')"</span>, <span class='st'>"library('ctv')"</span>, <span class='st'>"available.views()"</span>)
+<span class='fu'>docker_run_code</span>(<span class='no'>code</span>, <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+
+<span class='co'># With multiple expressions</span>
+<span class='co'># This one is not working, see https://github.com/ismailsunni/altRnative/issues/1</span>
+<span class='co'># docker_run_code(c(expression(a = 1 + 1, b = a + 2)),</span>
+<span class='co'>#  "ismailsunni/gnur-3.6.1-debian-geospatial")</span>
+
+<span class='co'># This one is working</span>
+<span class='no'>code</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span>(<span class='st'>"ctv"</span>), <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ctv"</span>), <span class='fu'><a href='https://rdrr.io/pkg/ctv/man/ctv-client.html'>available.views</a></span>())
+<span class='fu'>docker_run_code</span>(<span class='no'>code</span>, <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>)
+
+<span class='co'># This code below is for running sample, need to set proper directory</span>
+<span class='no'>code</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>'/home/docker/sdsr'</span>),
+                  <span class='kw pkg'>bookdown</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/bookdown/man/render_book.html'>render_book</a></span>(<span class='st'>'index.Rmd'</span>, <span class='st'>'bookdown::gitbook'</span>))
+<span class='fu'>docker_run_code</span>(<span class='no'>code</span>, <span class='st'>"ismailsunni/gnur-3.6.1-debian-geospatial"</span>,
+                <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='st'>'/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr'</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

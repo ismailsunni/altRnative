@@ -4,7 +4,7 @@
 \alias{docker_run_code}
 \title{Run a code in a docker image}
 \usage{
-docker_run_code(code, docker_image, volumes = NULL)
+docker_run_code(code, docker_image, volumes = NULL, ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -12,6 +12,8 @@ docker_run_code(code, docker_image, volumes = NULL)
 \item{docker_image}{A docker image name}
 
 \item{volumes}{Volume mapping from host to container}
+
+\item{...}{Parameters passed on to \link{stevedore} client creation and container running functions}
 }
 \description{
 Run a code as a string in a docker image
@@ -34,7 +36,7 @@ docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 # With multiple expressions
 # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
 # docker_run_code(c(expression(a = 1 + 1, b = a + 2)),
-  "ismailsunni/gnur-3.6.1-debian-geospatial")
+#  "ismailsunni/gnur-3.6.1-debian-geospatial")
 
 # This one is working
 code = expression(install.packages("ctv"), library("ctv"), available.views())
@@ -42,7 +44,7 @@ docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 
 # This code below is for running sample, need to set proper directory
 code = expression(setwd('/home/docker/sdsr'),
-                  bookdown::render_book('index.Rmd', 'bookdown::gitbook'))¸
+                  bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
 docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial",
                 volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
 }

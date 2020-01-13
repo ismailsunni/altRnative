@@ -4,7 +4,13 @@
 \alias{run_code}
 \title{Run code in a Docker image  of a platform and an R implementation}
 \usage{
-run_code(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL)
+run_code(
+  code,
+  platform = "debian",
+  r_implementation = "gnu-r",
+  volumes = NULL,
+  ...
+)
 }
 \arguments{
 \item{code}{An expression or string of R code}
@@ -14,10 +20,14 @@ run_code(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL)
 \item{r_implementation}{The R implementation name. See \link{supported_Rs}}
 
 \item{volumes}{Volume mapping from host to container}
+
+\item{...}{Parameters passed on to \link{stevedore} client creation and container running functions}
 }
 \description{
 Run code in a Docker image  of a platform and an R implementation
 }
 \examples{
+\dontrun{
 run_code("a = 1 + 1", 'debian', 'gnu-r')
+}
 }

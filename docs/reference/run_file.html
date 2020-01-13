@@ -130,7 +130,8 @@
   <span class='no'>r_file</span>,
   <span class='kw'>platform</span> <span class='kw'>=</span> <span class='st'>"debian"</span>,
   <span class='kw'>r_implementation</span> <span class='kw'>=</span> <span class='st'>"gnu-r"</span>,
-  <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -148,78 +149,23 @@
       <th>r_implementation</th>
       <td><p>The R implementation name. See <a href='supported_Rs.html'>supported_Rs</a></p></td>
     </tr>
+    <tr>
+      <th>volumes</th>
+      <td><p>Volume mapping from host to container</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Parameters passed on to stevedore client creation and container running functions</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"altRnative"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata/test.R'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'altRnative'</span>)
-<span class='fu'>run_file</span>(<span class='no'>file_path</span>, <span class='st'>'debian'</span>, <span class='st'>'gnu-r'</span>)</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                         
-#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
-#&gt; O&gt; /home/docker
-#&gt; O&gt; [1] "start"
-#&gt; O&gt; [1]O&gt;  4
-#&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; $id
-#&gt; [1] "f5b3967c666eb1c5872aac726eb064b637414d44016232d7c75e23b16bdba317"
-#&gt; 
-#&gt; $exit_code
-#&gt; [1] 0
-#&gt; 
-#&gt; $details
-#&gt; $details$can_remove
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $details$detach_keys
-#&gt; [1] ""
-#&gt; 
-#&gt; $details$id
-#&gt; [1] "f5b3967c666eb1c5872aac726eb064b637414d44016232d7c75e23b16bdba317"
-#&gt; 
-#&gt; $details$running
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $details$exit_code
-#&gt; [1] 0
-#&gt; 
-#&gt; $details$process_config
-#&gt; $details$process_config$privileged
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $details$process_config$user
-#&gt; [1] NA
-#&gt; 
-#&gt; $details$process_config$tty
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $details$process_config$entrypoint
-#&gt; [1] "Rscript"
-#&gt; 
-#&gt; $details$process_config$arguments
-#&gt; [1] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
-#&gt; 
-#&gt; 
-#&gt; $details$open_stdin
-#&gt; [1] FALSE
-#&gt; 
-#&gt; $details$open_stderr
-#&gt; [1] TRUE
-#&gt; 
-#&gt; $details$open_stdout
-#&gt; [1] TRUE
-#&gt; 
-#&gt; $details$container_id
-#&gt; [1] "2f1c6e95b170296665a8163cf0b4d992d3e58e5436afa19e4b6694b3ef2b43c2"
-#&gt; 
-#&gt; $details$pid
-#&gt; [1] 7886
-#&gt; 
-#&gt; 
-#&gt; $output
-#&gt; <span style='color: #0000BB;'>[1] "start"
-#&gt; [1] 4
-#&gt; [1] "fin"
-#&gt; </span><span></div><div class='input'><span class='fu'>run_file</span>(<span class='no'>file_path</span>, <span class='st'>'not-debian'</span>, <span class='st'>'gnu-r'</span>)</div><div class='output co'>#&gt; [1] "No Docker Image for not-debian and gnu-r"</div></span></pre>
+<span class='fu'>run_file</span>(<span class='no'>file_path</span>, <span class='st'>'debian'</span>, <span class='st'>'gnu-r'</span>)
+<span class='fu'>run_file</span>(<span class='no'>file_path</span>, <span class='st'>'not-debian'</span>, <span class='st'>'gnu-r'</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
