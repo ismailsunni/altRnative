@@ -114,10 +114,10 @@ docker_run_file <- function(r_file, docker_image, volumes = NULL){
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' run_file(file_path, 'debian', 'gnu-r')
 #' run_file(file_path, 'not-debian', 'gnu-r')
-run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r"){
+run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r", volumes = NULL){
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
-    return(docker_run_file(r_file, image_name))
+    return(docker_run_file(r_file, image_name, volumes = NULL))
   } else {
     print(paste("No Docker Image for", platform, "and", r_implementation))
   }
