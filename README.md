@@ -71,6 +71,31 @@ roxygen2::roxygenise(roclets = c('rd', 'collate', 'namespace', 'vignette'))
 pkgdown::build_site()
 ```
 
+The file `README.md` is generated from `README.Rmd`. A [pre-commit
+hook]() added with
+[`usethis`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
+should be configured to make sure the Markdown file is always up to date
+with the R Markdown file. Add the following to a file
+`.git/hooks/pre-commit`:
+
+``` bash
+#!/bin/bash
+README=($(git diff --cached --name-only | grep -Ei '^README\.[R]?md$'))
+MSG="use 'git commit --no-verify' to override this check"
+
+if [[ ${#README[@]} == 0 ]]; then
+  exit 0
+fi
+
+if [[ README.Rmd -nt README.md ]]; then
+  echo -e "README.md is out of date; please re-knit README.Rmd\n$MSG"
+  exit 1
+elif [[ ${#README[@]} -lt 2 ]]; then
+  echo -e "README.Rmd and README.md should be both staged\n$MSG"
+  exit 1
+fi
+```
+
 ## Contribute
 
 Please note that the ‘altRnative’ project is released with a
