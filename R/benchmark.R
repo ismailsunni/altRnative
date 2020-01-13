@@ -101,7 +101,7 @@ benchmarks <- function(run_function,
         e = call(run_function, code_or_file, platform, r_implementation, volumes)
         expressions[[paste(r_implementation, "on", platform)]] <- e
       } else {
-        print(paste('Docker image for', r_implementation, "and", platform, "is not supported"))
+        warning(paste('Docker image for', r_implementation, "and", platform, "not found, not running benchmark"))
       }
     }
   }
