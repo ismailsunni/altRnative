@@ -44,10 +44,10 @@ test_that("configuration can be passed to stevedore", {
   skip_on_cran()
 
   capture_warnings(capture_output(
-    messages <- capture_messages(pull_docker_image(stevedore_opts = list(api_version = "2.999")))
+    messages <- capture_messages(pull_docker_image(stevedore_opts = list(api_version = "0.0")))
   ))
 
-  expect_match(messages, "Requested API version '2.999' is above max version")
+  expect_match(messages, "Requested API version '0.0' is below min version")
 })
 
 test_that("not supported images are not pulled with informative warning", {
