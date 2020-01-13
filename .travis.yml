@@ -12,6 +12,15 @@ r:
 sudo: required
 dist: xenial
 
+# pull all images so tests need less time, create list with:
+# $ cat(paste("- docker pull", compatibility_table()$image_name), sep = "\n")
+before_script:
+  - docker pull ismailsunni/gnur-3.6.1-debian-geospatial
+  - docker pull ismailsunni/mro-3.5.3-ubuntu-geospatial
+  - docker pull ismailsunni/gnur-3.6.1-fedora-geospatial
+  - docker pull ismailsunni/gnur-3.6.1-archlinux-geospatial
+  - docker pull ismailsunni/mro-3.5.3-fedora-30-geospatial
+
 # don't do vignettes (relevant when trying to get on CRAN)
 r_build_args: "--no-manual --no-build-vignettes"
 r_check_args: "--no-manual --ignore-vignettes" # --as-cran
