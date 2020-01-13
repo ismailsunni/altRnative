@@ -2,19 +2,28 @@
 % Please edit documentation in R/utils.R
 \name{pull_docker_image}
 \alias{pull_docker_image}
-\title{Pull docker image from docker hub. Public image only.}
+\title{Pull docker image from Docker Hub}
 \usage{
 pull_docker_image(
   platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro")
+  r_implementations = c("gnu-r", "mro"),
+  stevedore_opts = list()
 )
 }
 \arguments{
 \item{platforms}{List of platform}
 
 \item{r_implementations}{List of R implementation}
+
+\item{stevedore_opts}{options passed to \link[stevedore]{docker_client}}
+}
+\value{
+the output of \link[stevedore]{docker$image$pull}, or \code{NULL} is not found.
 }
 \description{
+Works for public images only and checks if platform and R are supported, see \link{compability_table}¸
+}
+\details{
 For supported docker images only.
 }
 \examples{

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pull docker image from docker hub. Public image only. — pull_docker_image • altRnative</title>
+<title>Pull docker image from Docker Hub — pull_docker_image • altRnative</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Pull docker image from docker hub. Public image only. — pull_docker_image" />
-<meta property="og:description" content="For supported docker images only." />
+<meta property="og:title" content="Pull docker image from Docker Hub — pull_docker_image" />
+<meta property="og:description" content="Works for public images only and checks if platform and R are supported, see compability_table¸" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,17 +117,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pull docker image from docker hub. Public image only.</h1>
+    <h1>Pull docker image from Docker Hub</h1>
     <small class="dont-index">Source: <a href='https://github.com/ismailsunni/altRnative/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>pull_docker_image.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>For supported docker images only.</p>
+    <p>Works for public images only and checks if platform and R are supported, see compability_table¸</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pull_docker_image</span>(<span class='kw'>platforms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"debian"</span>, <span class='st'>"ubuntu"</span>),
-  <span class='kw'>r_implementations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gnu-r"</span>, <span class='st'>"mro"</span>))</pre>
+    <pre class="usage"><span class='fu'>pull_docker_image</span>(
+  <span class='kw'>platforms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"debian"</span>, <span class='st'>"ubuntu"</span>),
+  <span class='kw'>r_implementations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gnu-r"</span>, <span class='st'>"mro"</span>),
+  <span class='kw'>stevedore_opts</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,8 +143,18 @@
       <th>r_implementations</th>
       <td><p>List of R implementation</p></td>
     </tr>
+    <tr>
+      <th>stevedore_opts</th>
+      <td><p>options passed to <a href='https://rdrr.io/pkg/stevedore/man/docker_client.html'>docker_client</a></p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>the output of docker$image$pull, or <code>NULL</code> is not found.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For supported docker images only.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -152,6 +165,8 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

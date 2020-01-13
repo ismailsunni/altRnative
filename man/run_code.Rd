@@ -2,7 +2,7 @@
 % Please edit documentation in R/run.R
 \name{run_code}
 \alias{run_code}
-\title{Run a R file in a docker image  of a platform and an R implementation}
+\title{Run code in a Docker image  of a platform and an R implementation}
 \usage{
 run_code(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL)
 }
@@ -16,7 +16,7 @@ run_code(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL)
 \item{volumes}{Volume mapping from host to container}
 }
 \description{
-Run a R file in a docker image  of a platform and an R implementation
+Run code in a Docker image  of a platform and an R implementation
 }
 \examples{
 run_code("a = 1 + 1", 'debian', 'gnu-r')

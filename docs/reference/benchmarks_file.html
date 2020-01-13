@@ -126,8 +126,15 @@
     <p>Run benchmark for R code file across R implementation and platform.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>benchmarks_file</span>(<span class='no'>r_file</span>, <span class='kw'>platforms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"debian"</span>, <span class='st'>"ubuntu"</span>),
-  <span class='kw'>r_implementations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gnu-r"</span>, <span class='st'>"mro"</span>), <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>benchmarks_file</span>(
+  <span class='no'>r_file</span>,
+  <span class='kw'>platforms</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"debian"</span>, <span class='st'>"ubuntu"</span>),
+  <span class='kw'>r_implementations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gnu-r"</span>, <span class='st'>"mro"</span>),
+  <span class='kw'>volumes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pull_image</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,11 +145,19 @@
     </tr>
     <tr>
       <th>platforms</th>
-      <td><p>List of platform</p></td>
+      <td><p>List of platforms</p></td>
     </tr>
     <tr>
       <th>r_implementations</th>
-      <td><p>List of R implementation</p></td>
+      <td><p>List of R implementations</p></td>
+    </tr>
+    <tr>
+      <th>volumes</th>
+      <td><p>Volume mapping from host to container. Passed to <a href='run_code.html'>run_code</a></p></td>
+    </tr>
+    <tr>
+      <th>pull_image</th>
+      <td><p>If set to TRUE, the needed docker image will be pulled first</p></td>
     </tr>
     <tr>
       <th>times</th>
@@ -150,20 +165,16 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Parameters for microbenchmark</p></td>
+      <td><p>Parameters for <a href='https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html'>microbenchmark</a></p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata/test.R'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'altRnative'</span>)
-<span class='fu'>benchmarks_file</span>(<span class='no'>file_path</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
-#&gt; [1] "gnu-r" "mro"  
-#&gt; [1] "debian" "ubuntu"
-#&gt; [1] "Docker image for gnu-r and ubuntu is not supported"
-#&gt; [1] "Docker image for mro and debian is not supported"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
+<span class='fu'>benchmarks_file</span>(<span class='no'>file_path</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; Running benchmark with  gnu-r mro  on  debian ubuntu  for code ' /tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R '</div><div class='output co'>#&gt; <span class='warning'>Warning: Docker image for gnu-r and ubuntu not found, not running benchmark</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Docker image for mro and debian not found, not running benchmark</span></div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
 #&gt; O&gt; /home/docker
 #&gt; O&gt; 
 #&gt; 
@@ -201,20 +212,20 @@
 #&gt; O&gt; [1] "start"
 #&gt; O&gt; [1] 4
 #&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
 #&gt; O&gt; /home/docker
 #&gt; O&gt; [1] "start"
 #&gt; O&gt; [1] 4
 #&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
 #&gt; O&gt; /home/docker
 #&gt; O&gt; [1] "start"
 #&gt; O&gt; [1]O&gt;  4
 #&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
 #&gt; O&gt; /home/docker
 #&gt; O&gt; 
 #&gt; 
@@ -250,16 +261,16 @@
 #&gt; 
 #&gt; 
 #&gt; O&gt; [1] "start"
-#&gt; O&gt; [1]O&gt;  4
-#&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
-#&gt; O&gt; /home/docker
-#&gt; O&gt; [1] "start"
 #&gt; O&gt; [1] 4
 #&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
-#&gt; [1] "Rscript"                                                           
-#&gt; [2] "/tmp/RtmpRAMc7t/temp_libpath2bed590ec70b/altRnative/extdata/test.R"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
+#&gt; O&gt; /home/docker
+#&gt; O&gt; [1] "start"
+#&gt; O&gt; [1]O&gt;  4
+#&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; <span class='message'>Detected API version '1.40' is above max version '1.39'; downgrading</span></div><div class='output co'>#&gt; [1] "Full command"
+#&gt; [1] "Rscript"                                                         
+#&gt; [2] "/tmp/RtmprSb7sf/temp_libpathb935333c5b/altRnative/extdata/test.R"
 #&gt; O&gt; /home/docker
 #&gt; O&gt; 
 #&gt; 
@@ -285,7 +296,7 @@
 #&gt; O&gt; Intel is a trademark of Intel Corporation in the U.S. and/or other countries.
 #&gt; 
 #&gt; 
-#&gt; O&gt; 
+#&gt; 
 #&gt; 
 #&gt; O&gt; Microsoft R Open is an enhanced distribution of R made available by Microsoft under the GNU General Public License v2.
 #&gt; 
@@ -295,11 +306,11 @@
 #&gt; 
 #&gt; 
 #&gt; O&gt; [1] "start"
-#&gt; O&gt; [1]O&gt;  4
+#&gt; O&gt; [1] 4
 #&gt; O&gt; [1] "fin"</div><div class='output co'>#&gt; Unit: seconds
-#&gt;             expr      min       lq     mean   median       uq      max neval
-#&gt;  gnu-r on debian 12.15303 12.50960 12.76959 12.86618 13.07786 13.28955     3
-#&gt;    mro on ubuntu 12.16363 12.26059 12.45735 12.35756 12.60420 12.85085     3</div></pre>
+#&gt;             expr      min       lq     mean   median       uq     max neval
+#&gt;  gnu-r on debian 12.27753 12.30952 12.37154 12.34150 12.41855 12.4956     3
+#&gt;    mro on ubuntu 11.94117 12.01362 12.20448 12.08606 12.33613 12.5862     3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

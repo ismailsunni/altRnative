@@ -17,17 +17,17 @@ benchmarks_code(
 \arguments{
 \item{code}{An expression or string of R code}
 
-\item{platforms}{List of platform}
+\item{platforms}{List of platforms}
 
-\item{r_implementations}{List of R implementation}
+\item{r_implementations}{List of R implementations}
 
-\item{volumes}{Volume mapping from host to container. Passed to \link{run_code}.}
+\item{volumes}{Volume mapping from host to container. Passed to \link{run_code}}
 
 \item{times}{How many times the code will be run. Passed to \link{microbenchmark}}
 
-\item{pull_image}{If set to TRUE, the needed docker image will be pulled first.}
+\item{pull_image}{If set to TRUE, the needed docker image will be pulled first}
 
-\item{...}{Parameters for \link{microbenchmark}}
+\item{...}{Parameters for \link[microbenchmark]{microbenchmark}}
 }
 \description{
 Run benchmark for R code across R implementation and platform.

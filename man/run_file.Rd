@@ -2,9 +2,14 @@
 % Please edit documentation in R/run.R
 \name{run_file}
 \alias{run_file}
-\title{Run a R file in a docker image of a platform and an R implementation}
+\title{Run R file in a Docker image of a platform and an R implementation}
 \usage{
-run_file(r_file, platform = "debian", r_implementation = "gnu-r")
+run_file(
+  r_file,
+  platform = "debian",
+  r_implementation = "gnu-r",
+  volumes = NULL
+)
 }
 \arguments{
 \item{r_file}{A file of R code}
@@ -14,7 +19,7 @@ run_file(r_file, platform = "debian", r_implementation = "gnu-r")
 \item{r_implementation}{The R implementation name. See \link{supported_Rs}}
 }
 \description{
-Run a R file in a docker image  of a platform and an R implementation
+Run R file in a Docker image of a platform and an R implementation
 }
 \examples{
 library("altRnative")

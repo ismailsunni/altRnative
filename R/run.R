@@ -102,9 +102,8 @@ docker_run_file <- function(r_file, docker_image, volumes = NULL){
   return(result)
 }
 
-#' Run a R file in a docker image of a platform and an R implementation
+#' Run R file in a Docker image of a platform and an R implementation
 #'
-#' Run a R file in a docker image  of a platform and an R implementation
 #' @param r_file A file of R code
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
@@ -123,7 +122,8 @@ run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r", vo
   }
 }
 
-#' Run a R file in a docker image  of a platform and an R implementation
+#' Run code in a Docker image  of a platform and an R implementation
+#'
 #' @param code An expression or string of R code
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
@@ -136,6 +136,6 @@ run_code <- function(code, platform = "debian", r_implementation = "gnu-r", volu
   if (length(image_name) > 0){
     return(docker_run_code(code, image_name, volumes = volumes))
   } else {
-    print(paste("No Docker Image for", platform, "and", r_implementation))
+    print(paste("No Docker image for", platform, "and", r_implementation))
   }
 }

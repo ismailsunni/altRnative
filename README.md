@@ -60,6 +60,17 @@ autoplot(benchmark_result)
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
+## Documentation
+
+Documentation is created with [roxygen2](https://roxygen2.r-lib.org/)
+and the website with [pkgdown](https://pkgdown.r-lib.org/). Render both
+with the following commands:
+
+``` r
+roxygen2::roxygenise(roclets = c('rd', 'collate', 'namespace', 'vignette'))
+pkgdown::build_site()
+```
+
 ## Contribute
 
 Please note that the ‘altRnative’ project is released with a
