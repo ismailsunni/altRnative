@@ -6,9 +6,9 @@
 #' @export
 #' @examples
 #'
+#' \dontrun{
 #' benchmarks_code(code = "1 + 1", times = 3)
 #'
-#' \dontrun{
 #' # This code below is for running sample, need to set proper directory
 #' code = expression(setwd('/home/docker/sdsr'),
 #'                     bookdown::clean_book(TRUE),
@@ -49,8 +49,10 @@ benchmarks_code <- function(code,
 #' @inheritParams benchmarks
 #' @export
 #' @examples
+#' \dontrun{
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' benchmarks_file(file_path, times = 3)
+#' }
 benchmarks_file <- function(r_file,
                             platforms = c("debian", "ubuntu"),
                             r_implementations = c("gnu-r", "mro"),

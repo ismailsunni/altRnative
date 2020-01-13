@@ -34,9 +34,9 @@ Run benchmark for R code across R implementation and platform.
 }
 \examples{
 
+\dontrun{
 benchmarks_code(code = "1 + 1", times = 3)
 
-\dontrun{
 # This code below is for running sample, need to set proper directory
 code = expression(setwd('/home/docker/sdsr'),
                     bookdown::clean_book(TRUE),

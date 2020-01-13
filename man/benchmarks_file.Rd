@@ -33,6 +33,8 @@ benchmarks_file(
 Run benchmark for R code file across R implementation and platform.
 }
 \examples{
+\dontrun{
 file_path <- system.file('extdata/test.R', package = 'altRnative')
 benchmarks_file(file_path, times = 3)
+}
 }

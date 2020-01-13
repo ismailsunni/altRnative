@@ -4,7 +4,6 @@
 #'
 #' @export
 #' @examples
-#' library("altRnative")
 #' supported_platforms()
 supported_platforms <- function(){
   return(
@@ -24,7 +23,6 @@ supported_platforms <- function(){
 #'
 #' @export
 #' @examples
-#' library("altRnative")
 #' supported_Rs()
 supported_Rs <- function(){
   return(
@@ -70,7 +68,6 @@ compatibility_table <- function(){
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
 #' @export
 #' @examples
-#' library("altRnative")
 #' docker_image("debian", "gnu-r")
 #' docker_image("ubuntu", "mro")
 #' docker_image("debian", "renjin")
@@ -83,7 +80,7 @@ docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
 
 #' Pull docker image from Docker Hub
 #'
-#' Works for public images only and checks if platform and R are supported, see \link{compability_table}¸
+#' Works for public images only and checks if platform and R are supported, see \link{compatibility_table}¸
 #'
 #' For supported docker images only.
 #'
@@ -91,7 +88,7 @@ docker_image <- function(platform = "debian", r_implementation = "gnu-r"){
 #' @param platforms List of platform
 #' @param r_implementations List of R implementation
 #' @param stevedore_opts options passed to \link[stevedore]{docker_client}
-#' @return the output of \link[stevedore]{docker$image$pull}, or \code{NULL} is not found.
+#' @return the output of \link{stevedore}'s function \code{docker$image$pull}, or \code{NULL} if no image was found
 #' @export
 #' @examples
 #' \dontrun{

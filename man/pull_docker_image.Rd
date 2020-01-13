@@ -18,10 +18,10 @@ pull_docker_image(
 \item{stevedore_opts}{options passed to \link[stevedore]{docker_client}}
 }
 \value{
-the output of \link[stevedore]{docker$image$pull}, or \code{NULL} is not found.
+the output of \link{stevedore}'s function \code{docker$image$pull}, or \code{NULL} if no image was found
 }
 \description{
-Works for public images only and checks if platform and R are supported, see \link{compability_table}¸
+Works for public images only and checks if platform and R are supported, see \link{compatibility_table}¸
 }
 \details{
 For supported docker images only.

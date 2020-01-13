@@ -10,6 +10,5 @@ supported_platforms()
 Return list of supported platforms with their key to access.
 }
 \examples{
-library("altRnative")
 supported_platforms()
 }

@@ -10,6 +10,5 @@ supported_Rs()
 Return list of supported R implementations with their key to access.
 }
 \examples{
-library("altRnative")
 supported_Rs()
 }

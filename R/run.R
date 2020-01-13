@@ -7,8 +7,7 @@
 #' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
-#' library("altRnative")
-#'
+#' \dontrun{
 #' # With string
 #' docker_run_code("a = 1 + 1", "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
@@ -24,17 +23,14 @@
 #'
 #' # With multiple expressions
 #' # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
-#' \dontrun{
 #' # docker_run_code(c(expression(a = 1 + 1, b = a + 2)),
 #'   "ismailsunni/gnur-3.6.1-debian-geospatial")
-#' }
 #'
 #' # This one is working
 #' code = expression(install.packages("ctv"), library("ctv"), available.views())
 #' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
 #' # This code below is for running sample, need to set proper directory
-#' \dontrun{
 #' code = expression(setwd('/home/docker/sdsr'),
 #'                   bookdown::render_book('index.Rmd', 'bookdown::gitbook'))¸
 #' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial",
@@ -60,7 +56,6 @@ docker_run_code <- function(code, docker_image, volumes = NULL){
   return(result)
 }
 
-
 #' Run a R file in a docker image
 #'
 #' Run a R file in a docker image
@@ -70,10 +65,11 @@ docker_run_code <- function(code, docker_image, volumes = NULL){
 #' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
-#' library("altRnative")
+#' \dontrun{
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' docker_run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
-docker_run_file <- function(r_file, docker_image, volumes = NULL){
+#' }
+docker_run_file <- function(r_file, docker_image, volumes = NULL, ...){
   # Prepare docker container
   docker <- stevedore::docker_client()
 
@@ -109,11 +105,11 @@ docker_run_file <- function(r_file, docker_image, volumes = NULL){
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
 #' @export
 #' @examples
-#' library("altRnative")
+#' \dontrun{
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' run_file(file_path, 'debian', 'gnu-r')
 #' run_file(file_path, 'not-debian', 'gnu-r')
-run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r", volumes = NULL){
+#' }
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
     return(docker_run_file(r_file, image_name, volumes = NULL))
@@ -130,8 +126,9 @@ run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r", vo
 #' @param volumes Volume mapping from host to container
 #' @export
 #' @examples
+#' \dontrun{
 #' run_code("a = 1 + 1", 'debian', 'gnu-r')
-run_code <- function(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL){
+#' }
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
     return(docker_run_code(code, image_name, volumes = volumes))
