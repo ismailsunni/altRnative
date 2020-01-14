@@ -15,7 +15,6 @@ docker_image(platform = "debian", r_implementation = "gnu-r")
 Return the name of docker image. Return empty string if the combination is not supported.
 }
 \examples{
-library("altRnative")
 docker_image("debian", "gnu-r")
 docker_image("ubuntu", "mro")
 docker_image("debian", "renjin")

@@ -4,31 +4,52 @@
 \alias{benchmarks_code}
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
-benchmarks_code(code, platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3,
-  pull_image = FALSE, ...)
+benchmarks_code(
+  code,
+  platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"),
+  volumes = NULL,
+  times = 3,
+  pull_image = FALSE,
+  ...
+)
 }
 \arguments{
 \item{code}{An expression or string of R code}
 
-\item{platforms}{List of platform}
+\item{platforms}{List of platforms}
 
-\item{r_implementations}{List of R implementation}
+\item{r_implementations}{List of R implementations}
 
-\item{volumes}{Volume mapping from host to container. Passed to \link{run_code}.}
+\item{volumes}{Volume mapping from host to container. Passed to \link{run_code}}
 
 \item{times}{How many times the code will be run. Passed to \link{microbenchmark}}
 
-\item{pull_image}{If set to TRUE, the needed docker image will be pulled first.}
+\item{pull_image}{If set to TRUE, the needed docker image will be pulled first}
 
-\item{...}{Parameters for \link{microbenchmark}}
+\item{...}{Parameters for \link[microbenchmark]{microbenchmark}}
 }
 \description{
 Run benchmark for R code across R implementation and platform.
 }
 \examples{
+
+\dontrun{
 benchmarks_code(code = "1 + 1", times = 3)
+
 # This code below is for running sample, need to set proper directory
-# code = expression(setwd('/home/docker/sdsr'), bookdown::clean_book(TRUE), unlink('_book/', recursive=TRUE), unlink('_bookdown_files', recursive=TRUE), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
-# benchmarks_code(code = code, volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr', times = 3)
+code = expression(setwd('/home/docker/sdsr'),
+                    bookdown::clean_book(TRUE),
+                    unlink('_book/', recursive=TRUE),
+                    unlink('_bookdown_files', recursive=TRUE),
+                    bookdown::render_book('index.Rmd', 'bookdown::gitbook')
+)
+benchmarks_code(code = code,
+                volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
+                times = 3)
+benchmarks_code(code = code,
+                platforms = c("debian", "ubuntu", "fedora"),
+                volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
+                times = 3)
+}
 }

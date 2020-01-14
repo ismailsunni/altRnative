@@ -1,14 +1,14 @@
 #' Run a code in a docker image
 #'
 #' Run a code as a string in a docker image
-#' @import stevedore
+#' @importFrom stevedore docker_client
 #' @param code An expression or string of R code
 #' @param docker_image A docker image name
 #' @param volumes Volume mapping from host to container
+#' @param ... Parameters passed on to \link{stevedore} client creation and container running functions
 #' @export
 #' @examples
-#' library("altRnative")
-#'
+#' \dontrun{
 #' # With string
 #' docker_run_code("a = 1 + 1", "ismailsunni/gnur-3.6.1-debian-geospatial")
 #'
@@ -24,16 +24,22 @@
 #'
 #' # With multiple expressions
 #' # This one is not working, see https://github.com/ismailsunni/altRnative/issues/1
-#' # docker_run_code(c(expression(a = 1 + 1, b = a + 2)), "ismailsunni/gnur-3.6.1-debian-geospatial")
+#' # docker_run_code(c(expression(a = 1 + 1, b = a + 2)),
+#' #  "ismailsunni/gnur-3.6.1-debian-geospatial")
+#'
 #' # This one is working
 #' code = expression(install.packages("ctv"), library("ctv"), available.views())
 #' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial")
+#'
 #' # This code below is for running sample, need to set proper directory
-#' # code = expression(setwd('/home/docker/sdsr'), bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
-#' # docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial", volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
-docker_run_code <- function(code, docker_image, volumes = NULL){
+#' code = expression(setwd('/home/docker/sdsr'),
+#'                   bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
+#' docker_run_code(code, "ismailsunni/gnur-3.6.1-debian-geospatial",
+#'                 volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr')
+#' }
+docker_run_code <- function(code, docker_image, volumes = NULL, ...){
   # Prepare docker container
-  docker <- stevedore::docker_client()
+  docker <- stevedore::docker_client(...)
 
   # Prepare the script
   if (is.expression(code)){
@@ -46,34 +52,43 @@ docker_run_code <- function(code, docker_image, volumes = NULL){
   print(c("Rscript", "-e", full_code))
 
   # Run using stevedore
-  result <- docker$container$run(docker_image, c("Rscript", "-e", full_code), rm = TRUE, volumes = volumes)
+  result <- docker$container$run(docker_image,
+                                 c("Rscript", "-e", full_code),
+                                 rm = TRUE,
+                                 volumes = volumes,
+                                 ...)
 
   return(result)
 }
 
-
 #' Run a R file in a docker image
 #'
 #' Run a R file in a docker image
-#' @import stevedore
+#' @importFrom stevedore docker_client
 #' @param r_file A file of R code
 #' @param docker_image A docker image name
 #' @param volumes Volume mapping from host to container
+#' @param ... Parameters passed on to \link{stevedore} client creation and container running functions
 #' @export
 #' @examples
-#' library("altRnative")
+#' \dontrun{
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' docker_run_file(file_path, "ismailsunni/gnur-3.6.1-debian-geospatial")
-docker_run_file <- function(r_file, docker_image, volumes = NULL){
+#' }
+docker_run_file <- function(r_file, docker_image, volumes = NULL, ...){
   # Prepare docker container
-  docker <- stevedore::docker_client()
+  docker <- stevedore::docker_client(...)
 
   # Debug purpose
   print("Full command")
   print(c("Rscript", r_file))
 
   # Create container
-  container <- docker$container$create(docker_image, c("R", "--no-save"), tty = TRUE, volumes = volumes)
+  container <- docker$container$create(docker_image,
+                                       c("R", "--no-save"),
+                                       tty = TRUE,
+                                       volumes = volumes,
+                                       ...)
   container$start()
   # Get working directory
   work_dir <- container$exec("pwd")$output
@@ -93,40 +108,46 @@ docker_run_file <- function(r_file, docker_image, volumes = NULL){
   return(result)
 }
 
-#' Run a R file in a docker image of a platform and an R implementation
+#' Run R file in a Docker image of a platform and an R implementation
 #'
-#' Run a R file in a docker image  of a platform and an R implementation
 #' @param r_file A file of R code
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
+#' @param volumes Volume mapping from host to container
+#' @param ... Parameters passed on to \link{stevedore} client creation and container running functions
 #' @export
 #' @examples
-#' library("altRnative")
+#' \dontrun{
 #' file_path <- system.file('extdata/test.R', package = 'altRnative')
 #' run_file(file_path, 'debian', 'gnu-r')
 #' run_file(file_path, 'not-debian', 'gnu-r')
-run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r"){
+#' }
+run_file <- function(r_file, platform = "debian", r_implementation = "gnu-r", volumes = NULL, ...){
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
-    return(docker_run_file(r_file, image_name))
+    return(docker_run_file(r_file, image_name, volumes = NULL, ... = ...))
   } else {
     print(paste("No Docker Image for", platform, "and", r_implementation))
   }
 }
 
-#' Run a R file in a docker image  of a platform and an R implementation
+#' Run code in a Docker image  of a platform and an R implementation
+#'
 #' @param code An expression or string of R code
 #' @param platform The platform name see \link{supported_platforms}
 #' @param r_implementation The R implementation name. See \link{supported_Rs}
 #' @param volumes Volume mapping from host to container
+#' @param ... Parameters passed on to \link{stevedore} client creation and container running functions
 #' @export
 #' @examples
+#' \dontrun{
 #' run_code("a = 1 + 1", 'debian', 'gnu-r')
-run_code <- function(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL){
+#' }
+run_code <- function(code, platform = "debian", r_implementation = "gnu-r", volumes = NULL, ...){
   image_name <- docker_image(platform, r_implementation)
   if (length(image_name) > 0){
-    return(docker_run_code(code, image_name, volumes = volumes))
+    return(docker_run_code(code, image_name, volumes = volumes, ... = ...))
   } else {
-    print(paste("No Docker Image for", platform, "and", r_implementation))
+    print(paste("No Docker image for", platform, "and", r_implementation))
   }
 }
