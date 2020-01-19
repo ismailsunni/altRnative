@@ -86,7 +86,7 @@ autoplot(sdsr_result)
 ## Running Benchmark Per Chapter
 
 We have added a script to extract the R code for all chapter in the SDSR book in this fork. If you updated the book, you can run `Rscript extract_sdsr_code.R`. Here we will show how to run benchmark for each chapter of SDSR.
-```{r chapter_benchmark, eval=IS_EVAL}
+```{r chapter_benchmark, eval=IS_EVAL, message='hide', results=FALSE}
 # Commented entries do not have any code.
 chapters = c(
     '01-hello.R',
@@ -133,11 +133,23 @@ for (chapter in chapters){
     # append
     benchmark_result[[chapter]] = chapter_result
 }
+
+# Save plot as image
+for (chapter in chapters){
+  chapter_result = benchmark_result[chapter]
+  boxplot(
+    chapter_result[[1]], 
+    log = FALSE, 
+    ylim = c(0, ceiling(max(chapter_result[[1]][[2]]) / 1000000000 * 1.1)),
+    main = chapter
+    )
+    
+}
 ```
 
 For running all the code in one run you can run the `sdsr.R` file only.
 
-```{r sdsr_code_benchmark, eval=IS_EVAL}
+```{r sdsr_code_benchmark, eval=IS_EVAL, message='hide', results=FALSE}
     sdsr_code = expression(setwd('/home/docker/sdsr/code'), source('sdsr.R'))
     print(sdsr_code)
     sdsr_code_benchmark_result = benchmarks_code(
