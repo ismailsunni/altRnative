@@ -4,15 +4,9 @@
 \alias{benchmarks_code}
 \title{Run benchmark for R code across R implementation and platform}
 \usage{
-benchmarks_code(
-  code,
-  platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"),
-  volumes = NULL,
-  times = 3,
-  pull_image = FALSE,
-  ...
-)
+benchmarks_code(code, platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"), volumes = NULL, times = 3,
+  pull_image = FALSE, ...)
 }
 \arguments{
 \item{code}{An expression or string of R code}

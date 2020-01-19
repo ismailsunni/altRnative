@@ -4,15 +4,9 @@
 \alias{benchmarks_file}
 \title{Run benchmark for R code file across R implementation and platform}
 \usage{
-benchmarks_file(
-  r_file,
-  platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"),
-  volumes = NULL,
-  pull_image = FALSE,
-  times = 3,
-  ...
-)
+benchmarks_file(r_file, platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"), volumes = NULL,
+  pull_image = FALSE, times = 3, ...)
 }
 \arguments{
 \item{r_file}{A file of R code}

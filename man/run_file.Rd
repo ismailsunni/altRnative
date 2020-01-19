@@ -4,13 +4,8 @@
 \alias{run_file}
 \title{Run R file in a Docker image of a platform and an R implementation}
 \usage{
-run_file(
-  r_file,
-  platform = "debian",
-  r_implementation = "gnu-r",
-  volumes = NULL,
-  ...
-)
+run_file(r_file, platform = "debian", r_implementation = "gnu-r",
+  volumes = NULL, ...)
 }
 \arguments{
 \item{r_file}{A file of R code}

@@ -52,7 +52,7 @@ compatibility_table <- function(){
       "ismailsunni/gnur-3.6.1-debian-geospatial",
       "ismailsunni/mro-3.5.3-ubuntu-geospatial",
       "ismailsunni/gnur-3.6.1-fedora-geospatial",
-      "ismailsunni/gnur-3.6.1-archlinux-geospatial",
+      "ismailsunni/gnur-3.6.1-archlinux-geospatial:20200106",
       "ismailsunni/mro-3.5.3-fedora-30-geospatial"
       )
     )

@@ -82,3 +82,70 @@ From here, you can see the result or plot the graph like the previous result.
 print(sdsr_result)
 autoplot(sdsr_result)
 ```
+
+## Running Benchmark Per Chapter
+
+We have added a script to extract the R code for all chapter in the SDSR book in this fork. If you updated the book, you can run `Rscript extract_sdsr_code.R`. Here we will show how to run benchmark for each chapter of SDSR.
+```{r chapter_benchmark, eval=IS_EVAL}
+# Commented entries do not have any code.
+chapters = c(
+    '01-hello.R',
+    '02-Spaces.R',
+    '03-Geometries.R',
+    '04-Raster-Cube.R',
+    '05-GeomManipulations.R',
+    '06-Attributes.R',
+    '07-ReferenceSystems.R',
+    '08-Plotting.R',
+    '09-BasePlot.R',
+    '10-Ggplot2.R',
+    # Files below do not have files
+    # '11-Interactive.R',
+    # '12-SummarizingGeoms.R',
+    # '13-PointPattern.R',
+    # '14-Manipulating.R',
+    # '15-UpDownscaling.R',
+    # '16-Geostatistics.R',
+    # '17-Areal.R',
+    # '18-SpatialRegression.R',
+    # '19-Movement.R',
+    # '20-STModelling.R',
+    # '30-sp-raster.R',
+    '98-rbascis.R'
+)
+
+benchmark_result <- c()
+
+for (chapter in chapters){
+    code = substitute(
+      expression(
+        setwd('/home/docker/sdsr/code'), 
+        source(chapter)), 
+      list(chapter = chapter))
+    print(code)
+    chapter_result = benchmarks_code(
+      code = code,
+      platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
+      r_implementations = c('gnu-r', 'mro'),
+      volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
+      times = 10
+    )
+    # append
+    benchmark_result[[chapter]] = chapter_result
+}
+```
+
+For running all the code in one run you can run the `sdsr.R` file only.
+
+```{r sdsr_code_benchmark, eval=IS_EVAL}
+    sdsr_code = expression(setwd('/home/docker/sdsr/code'), source('sdsr.R'))
+    print(sdsr_code)
+    sdsr_code_benchmark_result = benchmarks_code(
+      code = sdsr_code,
+      platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
+      r_implementations = c('gnu-r', 'mro'),
+      volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
+      times = 10
+    )
+```
+
