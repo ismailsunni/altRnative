@@ -4,16 +4,9 @@
 \alias{benchmarks}
 \title{Internal function for benchmark execution}
 \usage{
-benchmarks(
-  run_function,
-  code_or_file,
-  platforms = c("debian", "ubuntu"),
-  r_implementations = c("gnu-r", "mro"),
-  volumes = volumes,
-  times = 3,
-  pull_image = pull_image,
-  ...
-)
+benchmarks(run_function, code_or_file, platforms = c("debian", "ubuntu"),
+  r_implementations = c("gnu-r", "mro"), volumes = volumes,
+  times = 3, pull_image = pull_image, ...)
 }
 \arguments{
 \item{platforms}{List of platforms}
