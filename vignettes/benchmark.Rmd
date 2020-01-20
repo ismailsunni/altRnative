@@ -167,14 +167,7 @@ for (chapter in chapters){
   filename = paste0('./plots/ratio_', substr(chapter, 0, nchar(chapter) - 1), 'png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
-  boxplot(
-    normalize_chapter_result[[1]], 
-    log = FALSE, 
-    ylim = c(0, ceiling(max(normalize_chapter_result[[1]][[2]]) / 1000000000 * 1.1)),
-    xlab = 'Docker Images',
-    ylab = 'Duration Ratio',
-    main = paste0('Duration Ratio for ', chapter)
-    )
+  normalize_benchmark_boxplot(normalize_chapter_result[[1]], main = paste0('Duration Ratio for ', chapter))
   dev.off()
 }
 ```
@@ -210,13 +203,7 @@ Normalize the result to get the duration ratio.
   filename = paste0('./plots/ratio_sdsr.png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
-  boxplot(
-    normalize_sdsr_code_benchmark_result, 
-    log = FALSE, 
-    xlab = 'Docker Images',
-    ylab = 'Duration Ratio',
-    main = 'Duration Ratio for All SDSR Code'
-    )
+  normalize_benchmark_boxplot(normalize_sdsr_code_benchmark_result, main = 'Duration Ratio for All SDSR Code')
   dev.off()
 ```
 
