@@ -155,6 +155,26 @@ for (chapter in chapters){
 }
 ```
 
+Normalize the result to get the duration ratio.
+
+```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+for (chapter in chapters){
+  normalize_chapter_result = benchmark_result[chapter]
+  normalize_chapter_result[[1]][[2]] = normalize_chapter_result[[1]][[2]] / min(normalize_chapter_result[[1]][[2]])
+  filename = paste0('./plots/ratio_', substr(chapter, 0, nchar(chapter) - 1), 'png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  boxplot(
+    normalize_chapter_result[[1]], 
+    log = FALSE, 
+    xlab = 'Docker Images',
+    ylab = 'Duration Ratio',
+    main = paste0('Duration Ratio for ', chapter)
+    )
+  dev.off()
+}
+```
+
 For running all the code in one run you can run the `sdsr.R` file only.
 
 ```{r sdsr_code_benchmark, eval=IS_EVAL, message='hide', results=FALSE}
@@ -181,6 +201,24 @@ And save the box plot in the disk.
     xlab = 'Docker Images',
     ylab = 'Duration (seconds)',
     main = 'All SDSR Code '
+    )
+  dev.off()
+```
+
+Normalize the result to get the duration ratio.
+
+```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+  normalize_sdsr_code_benchmark_result = sdsr_code_benchmark_result
+  normalize_sdsr_code_benchmark_result[[2]] = normalize_sdsr_code_benchmark_result[[2]] / min(normalize_sdsr_code_benchmark_result[[2]])
+  filename = paste0('./plots/ratio_sdsr.png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  boxplot(
+    normalize_sdsr_code_benchmark_result, 
+    log = FALSE, 
+    xlab = 'Docker Images',
+    ylab = 'Duration Ratio',
+    main = 'Duration Ratio for All SDSR Code'
     )
   dev.off()
 ```
