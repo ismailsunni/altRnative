@@ -33,8 +33,8 @@ You can also specify the pulling in the `benchmark_code` function by adding `pul
 
 First, we will check that the package is working properly by running very simple code (e.g. `1+1`).
 
-```{r simple_check, message='hide', results=FALSE, eval=IS_EVAL}
-benchmark_result = benchmarks_code(
+```{r simple_benchmark, message='hide', results=FALSE, eval=IS_EVAL}
+simple_benchmark_result = benchmarks_code(
   code = "1 + 1", 
   r_implementations = c('gnu-r', 'mro'), 
   platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
@@ -44,9 +44,19 @@ benchmark_result = benchmarks_code(
 
 The result is a micorbenchmark object that can be printed or create the graph (using `ggplot2`)
 ```{r simple_result, eval=IS_EVAL}
-print(benchmark_result)
+print(simple_benchmark_result)
 library('ggplot2')
-autoplot(benchmark_result)
+autoplot(simple_benchmark_result)
+boxplot(simple_benchmark_result, log = FALSE)
+```
+
+Or can be saved on the disk:
+```{r save_simple_result_plot, eval=IS_EVAL}
+  filename = paste0('./plots/baseline.png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  benchmark_boxplot(simple_benchmark_result, main = 'Baseline Benchmark')
+  dev.off()
 ```
 
 Next, we use Spatial Data Science with R book from Prof. Edzer Pebesma as the code for geospatial benchmark. I have modified the book to remove the part that using `stars` data and Air Quality data since both are very big. The modified book can be obtained from [my fork on Github](https://github.com/ismailsunni/sdsr). You can eithe download or clone using git to your local machine.
@@ -143,14 +153,7 @@ for (chapter in chapters){
   filename = paste0('./plots/', substr(chapter, 0, nchar(chapter) - 1), 'png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
-  boxplot(
-    chapter_result[[1]], 
-    log = FALSE, 
-    ylim = c(0, ceiling(max(chapter_result[[1]][[2]]) / 1000000000 * 1.1)),
-    xlab = 'Docker Images',
-    ylab = 'Duration (seconds)',
-    main = chapter
-    )
+  benchmark_boxplot(chapter_result[[1]], main = chapter)
   dev.off()
 }
 ```
@@ -167,6 +170,7 @@ for (chapter in chapters){
   boxplot(
     normalize_chapter_result[[1]], 
     log = FALSE, 
+    ylim = c(0, ceiling(max(normalize_chapter_result[[1]][[2]]) / 1000000000 * 1.1)),
     xlab = 'Docker Images',
     ylab = 'Duration Ratio',
     main = paste0('Duration Ratio for ', chapter)
@@ -194,20 +198,13 @@ And save the box plot in the disk.
   filename = paste0('./plots/sdsr.png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
-  boxplot(
-    sdsr_code_benchmark_result, 
-    log = FALSE, 
-    ylim = c(0, ceiling(max(sdsr_code_benchmark_result[[2]]) / 1000000000 * 1.1)),
-    xlab = 'Docker Images',
-    ylab = 'Duration (seconds)',
-    main = 'All SDSR Code '
-    )
+  benchmark_boxplot(sdsr_code_benchmark_result, main = 'All SDSR Code ')
   dev.off()
 ```
 
 Normalize the result to get the duration ratio.
 
-```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+```{r ratio_sdsr_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
   normalize_sdsr_code_benchmark_result = sdsr_code_benchmark_result
   normalize_sdsr_code_benchmark_result[[2]] = normalize_sdsr_code_benchmark_result[[2]] / min(normalize_sdsr_code_benchmark_result[[2]])
   filename = paste0('./plots/ratio_sdsr.png')
