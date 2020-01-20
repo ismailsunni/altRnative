@@ -36,6 +36,7 @@ benchmark_boxplot <- function(
 #' Plot a normalize box plot from the result of benchmarking with some default values
 #' @importFrom graphics boxplot
 #' @param benchmark_result Benchmark result from altRnative
+#' @param baseline_image The docker image that is used for baseline. If NULL, use overall mean duration.
 #' @param log Set to TRUE If use log (time), else FALSE
 #' @param xlab The lab for x axis
 #' @param ylab The lab for y axis
@@ -44,6 +45,7 @@ benchmark_boxplot <- function(
 #' @export
 normalize_benchmark_boxplot <- function(
   benchmark_result,
+  baseline_image = NULL,
   log = FALSE,
   xlab = 'Docker Images',
   ylab = 'Duration Ratio',
@@ -51,7 +53,12 @@ normalize_benchmark_boxplot <- function(
   ...
 ){
   normalize_benchmark_result =  benchmark_result
-  normalize_benchmark_result[[2]] = normalize_benchmark_result[[2]] / min(normalize_benchmark_result[[2]])
+  if (is.null(baseline_image)){
+    baseline_duration = mean(normalize_benchmark_result$time)
+  } else {
+    baseline_duration = mean(subset(normalize_benchmark_result, normalize_benchmark_result$expr==baseline_image)$time)
+  }
+  normalize_benchmark_result[[2]] = normalize_benchmark_result[[2]] / baseline_duration
 
   if (is.null(ylim)){
     # From 0 to ceiling(max) + 1 second

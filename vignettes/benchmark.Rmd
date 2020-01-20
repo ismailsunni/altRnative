@@ -160,14 +160,12 @@ for (chapter in chapters){
 
 Normalize the result to get the duration ratio.
 
-```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL}
 for (chapter in chapters){
-  normalize_chapter_result = benchmark_result[chapter]
-  normalize_chapter_result[[1]][[2]] = normalize_chapter_result[[1]][[2]] / min(normalize_chapter_result[[1]][[2]])
   filename = paste0('./plots/ratio_', substr(chapter, 0, nchar(chapter) - 1), 'png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
-  normalize_benchmark_boxplot(normalize_chapter_result[[1]], main = paste0('Duration Ratio for ', chapter))
+  normalize_benchmark_boxplot(benchmark_result[chapter][[1]], baseline_image = 'gnu-r on debian', main = paste0('Duration Ratio for ', chapter))
   dev.off()
 }
 ```
@@ -198,12 +196,13 @@ And save the box plot in the disk.
 Normalize the result to get the duration ratio.
 
 ```{r ratio_sdsr_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
-  normalize_sdsr_code_benchmark_result = sdsr_code_benchmark_result
-  normalize_sdsr_code_benchmark_result[[2]] = normalize_sdsr_code_benchmark_result[[2]] / min(normalize_sdsr_code_benchmark_result[[2]])
   filename = paste0('./plots/ratio_sdsr.png')
-  print(filename)
   png(filename=filename, width = 800, height = 400)
-  normalize_benchmark_boxplot(normalize_sdsr_code_benchmark_result, main = 'Duration Ratio for All SDSR Code')
+  normalize_benchmark_boxplot(
+    sdsr_code_benchmark_result, 
+    baseline_image = 'gnu-r on debian', 
+    main = 'Duration Ratio for All SDSR Code'
+    )
   dev.off()
 ```
 

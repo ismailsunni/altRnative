@@ -4,11 +4,14 @@
 \alias{normalize_benchmark_boxplot}
 \title{Normalize box plot}
 \usage{
-normalize_benchmark_boxplot(benchmark_result, log = FALSE,
-  xlab = "Docker Images", ylab = "Duration Ratio", ylim = NULL, ...)
+normalize_benchmark_boxplot(benchmark_result, baseline_image = NULL,
+  log = FALSE, xlab = "Docker Images", ylab = "Duration Ratio",
+  ylim = NULL, ...)
 }
 \arguments{
 \item{benchmark_result}{Benchmark result from altRnative}
+
+\item{baseline_image}{The docker image that is used for baseline. If NULL, use overall mean duration.}
 
 \item{log}{Set to TRUE If use log (time), else FALSE}
 
