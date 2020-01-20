@@ -137,13 +137,18 @@ for (chapter in chapters){
 # Save plot as image
 for (chapter in chapters){
   chapter_result = benchmark_result[chapter]
+  filename = paste0('./vignettes/plots/', substr(chapter, 0, nchar(chapter) - 1), 'png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
   boxplot(
     chapter_result[[1]], 
     log = FALSE, 
     ylim = c(0, ceiling(max(chapter_result[[1]][[2]]) / 1000000000 * 1.1)),
+    xlab = 'Docker Images',
+    ylab = 'Duration (seconds)',
     main = chapter
     )
-    
+  dev.off()
 }
 ```
 
