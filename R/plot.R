@@ -1,7 +1,13 @@
 #' Normal box plot
 #'
 #' Plot a box plot from the result of benchmarking with some default
-#'
+#' @importFrom graphics boxplot
+#' @param benchmark_result Benchmark result from altRnative
+#' @param log Set to TRUE If use log (time), else FALSE
+#' @param xlab The lab for x axis
+#' @param ylab The lab for y axis
+#' @param ylim Range for ye axis, if NULL, set to max + 1 seconds
+#' @param ... Parameters passed on boxplot method
 #' @export
 benchmark_boxplot <- function(
   benchmark_result,
@@ -28,7 +34,13 @@ benchmark_boxplot <- function(
 #' Normalize box plot
 #'
 #' Plot a normalize box plot from the result of benchmarking with some default values
-#'
+#' @importFrom graphics boxplot
+#' @param benchmark_result Benchmark result from altRnative
+#' @param log Set to TRUE If use log (time), else FALSE
+#' @param xlab The lab for x axis
+#' @param ylab The lab for y axis
+#' @param ylim Range for ye axis, if NULL, set to max + 1 seconds
+#' @param ... Parameters passed on boxplot method
 #' @export
 normalize_benchmark_boxplot <- function(
   benchmark_result,

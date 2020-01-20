@@ -8,6 +8,19 @@ benchmark_boxplot(benchmark_result, log = FALSE,
   xlab = "Docker Images", ylab = "Duration (seconds)", ylim = NULL,
   ...)
 }
+\arguments{
+\item{benchmark_result}{Benchmark result from altRnative}
+
+\item{log}{Set to TRUE If use log (time), else FALSE}
+
+\item{xlab}{The lab for x axis}
+
+\item{ylab}{The lab for y axis}
+
+\item{ylim}{Range for ye axis, if NULL, set to max + 1 seconds}
+
+\item{...}{Parameters passed on boxplot method}
+}
 \description{
 Plot a box plot from the result of benchmarking with some default
 }
