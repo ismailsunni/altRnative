@@ -133,11 +133,14 @@ for (chapter in chapters){
     # append
     benchmark_result[[chapter]] = chapter_result
 }
+```
 
+And save the box plot in the disk.
+```{r save_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
 # Save plot as image
 for (chapter in chapters){
   chapter_result = benchmark_result[chapter]
-  filename = paste0('./vignettes/plots/', substr(chapter, 0, nchar(chapter) - 1), 'png')
+  filename = paste0('./plots/', substr(chapter, 0, nchar(chapter) - 1), 'png')
   print(filename)
   png(filename=filename, width = 800, height = 400)
   boxplot(
@@ -164,5 +167,21 @@ For running all the code in one run you can run the `sdsr.R` file only.
       volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
       times = 10
     )
+```
+
+And save the box plot in the disk.
+```{r save_sdsr_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+  filename = paste0('./plots/sdsr.png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  boxplot(
+    sdsr_code_benchmark_result, 
+    log = FALSE, 
+    ylim = c(0, ceiling(max(sdsr_code_benchmark_result[[2]]) / 1000000000 * 1.1)),
+    xlab = 'Docker Images',
+    ylab = 'Duration (seconds)',
+    main = 'All SDSR Code '
+    )
+  dev.off()
 ```
 
