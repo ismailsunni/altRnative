@@ -33,8 +33,8 @@ You can also specify the pulling in the `benchmark_code` function by adding `pul
 
 First, we will check that the package is working properly by running very simple code (e.g. `1+1`).
 
-```{r simple_check, message='hide', results=FALSE, eval=IS_EVAL}
-benchmark_result = benchmarks_code(
+```{r simple_benchmark, message='hide', results=FALSE, eval=IS_EVAL}
+simple_benchmark_result = benchmarks_code(
   code = "1 + 1", 
   r_implementations = c('gnu-r', 'mro'), 
   platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
@@ -44,9 +44,19 @@ benchmark_result = benchmarks_code(
 
 The result is a micorbenchmark object that can be printed or create the graph (using `ggplot2`)
 ```{r simple_result, eval=IS_EVAL}
-print(benchmark_result)
+print(simple_benchmark_result)
 library('ggplot2')
-autoplot(benchmark_result)
+autoplot(simple_benchmark_result)
+boxplot(simple_benchmark_result, log = FALSE)
+```
+
+Or can be saved on the disk:
+```{r save_simple_result_plot, eval=IS_EVAL}
+  filename = paste0('./plots/baseline.png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  benchmark_boxplot(simple_benchmark_result, main = 'Baseline Benchmark')
+  dev.off()
 ```
 
 Next, we use Spatial Data Science with R book from Prof. Edzer Pebesma as the code for geospatial benchmark. I have modified the book to remove the part that using `stars` data and Air Quality data since both are very big. The modified book can be obtained from [my fork on Github](https://github.com/ismailsunni/sdsr). You can eithe download or clone using git to your local machine.
@@ -86,7 +96,7 @@ autoplot(sdsr_result)
 ## Running Benchmark Per Chapter
 
 We have added a script to extract the R code for all chapter in the SDSR book in this fork. If you updated the book, you can run `Rscript extract_sdsr_code.R`. Here we will show how to run benchmark for each chapter of SDSR.
-```{r chapter_benchmark, eval=IS_EVAL}
+```{r chapter_benchmark, eval=IS_EVAL, message='hide', results=FALSE}
 # Commented entries do not have any code.
 chapters = c(
     '01-hello.R',
@@ -135,9 +145,34 @@ for (chapter in chapters){
 }
 ```
 
+And save the box plot in the disk.
+```{r save_chapter_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+# Save plot as image
+for (chapter in chapters){
+  chapter_result = benchmark_result[chapter]
+  filename = paste0('./plots/', substr(chapter, 0, nchar(chapter) - 1), 'png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  benchmark_boxplot(chapter_result[[1]], main = chapter)
+  dev.off()
+}
+```
+
+Normalize the result to get the duration ratio.
+
+```{r ratio_chapter_code_benchmark_plot, eval=IS_EVAL}
+for (chapter in chapters){
+  filename = paste0('./plots/ratio_', substr(chapter, 0, nchar(chapter) - 1), 'png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  normalize_benchmark_boxplot(benchmark_result[chapter][[1]], baseline_image = 'gnu-r on debian', main = paste0('Duration Ratio for ', chapter))
+  dev.off()
+}
+```
+
 For running all the code in one run you can run the `sdsr.R` file only.
 
-```{r sdsr_code_benchmark, eval=IS_EVAL}
+```{r sdsr_code_benchmark, eval=IS_EVAL, message='hide', results=FALSE}
     sdsr_code = expression(setwd('/home/docker/sdsr/code'), source('sdsr.R'))
     print(sdsr_code)
     sdsr_code_benchmark_result = benchmarks_code(
@@ -147,5 +182,27 @@ For running all the code in one run you can run the `sdsr.R` file only.
       volumes = '/home/ismailsunni/dev/r/sdsr:/home/docker/sdsr',
       times = 10
     )
+```
+
+And save the box plot in the disk.
+```{r save_sdsr_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+  filename = paste0('./plots/sdsr.png')
+  print(filename)
+  png(filename=filename, width = 800, height = 400)
+  benchmark_boxplot(sdsr_code_benchmark_result, main = 'All SDSR Code ')
+  dev.off()
+```
+
+Normalize the result to get the duration ratio.
+
+```{r ratio_sdsr_code_benchmark_plot, eval=IS_EVAL, message='hide', results=FALSE}
+  filename = paste0('./plots/ratio_sdsr.png')
+  png(filename=filename, width = 800, height = 400)
+  normalize_benchmark_boxplot(
+    sdsr_code_benchmark_result, 
+    baseline_image = 'gnu-r on debian', 
+    main = 'Duration Ratio for All SDSR Code'
+    )
+  dev.off()
 ```
 
