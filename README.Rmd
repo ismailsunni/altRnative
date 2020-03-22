@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Travis build status](https://travis-ci.org/ismailsunni/altRnative.svg?branch=master)](https://travis-ci.org/ismailsunni/altRnative)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3671405.svg)](https://doi.org/10.5281/zenodo.3671405)
 <!-- badges: end -->
 
 An R package to run you R code in different R implementations and platforms in [Docker]() containers.
