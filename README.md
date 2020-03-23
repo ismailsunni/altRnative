@@ -1,35 +1,41 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# altRnative
+altRnative
+==========
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![Travis build status](https://travis-ci.org/ismailsunni/altRnative.svg?branch=master)](https://travis-ci.org/ismailsunni/altRnative) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3671405.svg)](https://doi.org/10.5281/zenodo.3671405) <!-- badges: end -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build
-status](https://travis-ci.org/ismailsunni/altRnative.svg?branch=master)](https://travis-ci.org/ismailsunni/altRnative)
-<!-- badges: end -->
+An R package to run you R code in different R implementations and platforms in [Docker]() containers.
 
-An R package to run you R code in different R implementations and
-platforms in [Docker]() containers.
+Installation
+------------
 
-## Installation
-
-You can install the development version [from
-GitHub](https://github.com/ismailsunni/altRnative) with:
+You can install the development version [from GitHub](https://github.com/ismailsunni/altRnative) with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("ismailsunni/altRnative")
 ```
 
-## Example
+Example
+-------
 
 ``` r
 library('altRnative')
 pull_docker_image(c('gnu-r', 'mro'), c('debian', 'ubuntu', 'fedora'))
-#> Detected API version '1.40' is above max version '1.39'; downgrading
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for debian and gnu-r is not supported
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for debian and mro is not supported
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for ubuntu and gnu-r is not supported
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for ubuntu and mro is not supported
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for fedora and gnu-r is not supported
+#> Warning in pull_docker_image(c("gnu-r", "mro"), c("debian", "ubuntu",
+#> "fedora")): Docker image for fedora and mro is not supported
 
 benchmark_result = benchmarks_code(
   code = "1 + 1", 
@@ -37,6 +43,15 @@ benchmark_result = benchmarks_code(
   platforms = c('debian', 'ubuntu', 'fedora', 'archlinux'),
   times = 3
   )
+#> Warning in benchmarks("run_code", code_or_file = code, platforms =
+#> platforms, : Docker image for gnu-r and ubuntu not found, not running
+#> benchmark
+#> Warning in benchmarks("run_code", code_or_file = code, platforms =
+#> platforms, : Docker image for mro and debian not found, not running
+#> benchmark
+#> Warning in benchmarks("run_code", code_or_file = code, platforms =
+#> platforms, : Docker image for mro and archlinux not found, not running
+#> benchmark
 #> Detected API version '1.40' is above max version '1.39'; downgrading
 #> Detected API version '1.40' is above max version '1.39'; downgrading
 #> Detected API version '1.40' is above max version '1.39'; downgrading
@@ -60,23 +75,17 @@ autoplot(benchmark_result)
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-## Documentation
+Documentation
+-------------
 
-Documentation is created with [roxygen2](https://roxygen2.r-lib.org/)
-and the website with [pkgdown](https://pkgdown.r-lib.org/). Render both
-with the following commands:
+Documentation is created with [roxygen2](https://roxygen2.r-lib.org/) and the website with [pkgdown](https://pkgdown.r-lib.org/). Render both with the following commands:
 
 ``` r
 roxygen2::roxygenise(roclets = c('rd', 'collate', 'namespace', 'vignette'))
 pkgdown::build_site()
 ```
 
-The file `README.md` is generated from `README.Rmd`. A [pre-commit
-hook]() added with
-[`usethis`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
-should be configured to make sure the Markdown file is always up to date
-with the R Markdown file. Add the following to a file
-`.git/hooks/pre-commit`:
+The file `README.md` is generated from `README.Rmd`. A [pre-commit hook]() added with [`usethis`](https://usethis.r-lib.org/reference/use_readme_rmd.html) should be configured to make sure the Markdown file is always up to date with the R Markdown file. Add the following to a file `.git/hooks/pre-commit`:
 
 ``` bash
 #!/bin/bash
@@ -96,12 +105,12 @@ elif [[ ${#README[@]} -lt 2 ]]; then
 fi
 ```
 
-## Contribute
+Contribute
+----------
 
-Please note that the ‘altRnative’ project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
-this project, you agree to abide by its terms.
+Please note that the 'altRnative' project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
-## License
+License
+-------
 
 This project is published under MIT license, see file `LICENSE`.
